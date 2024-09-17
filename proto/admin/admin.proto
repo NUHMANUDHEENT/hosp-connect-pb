@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package admin;
+
+option go_package = "github.com/NUHMANUDHEENT/hosp-connect-proto/proto/admin;admin";
+;
+
+service AdminService{
+    rpc SignIn (SingInRequest) returns (SignInResponse);
+    rpc AddDoctor (AddDoctorRequest) returns (AddDoctorResponse);
+}
+
+message SingInRequest{
+    string email = 1;
+    string password = 2;   
+}
+message SignInResponse{
+    string message = 1;
+}
+message AddDoctorRequest{
+    string name = 1;
+    string email = 2;
+    string password = 3;
+    string specialization = 4;
+    string doctorId = 5;
+}
+message AddDoctorResponse{
+    string message =1;
+}
