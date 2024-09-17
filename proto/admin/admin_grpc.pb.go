@@ -17,7 +17,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdminServiceClient interface {
-	SignIn(ctx context.Context, in *SingInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
+	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
 	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*AddDoctorResponse, error)
 }
 
@@ -29,7 +29,7 @@ func NewAdminServiceClient(cc grpc.ClientConnInterface) AdminServiceClient {
 	return &adminServiceClient{cc}
 }
 
-func (c *adminServiceClient) SignIn(ctx context.Context, in *SingInRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
+func (c *adminServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
 	out := new(SignInResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/SignIn", in, out, opts...)
 	if err != nil {
@@ -51,7 +51,7 @@ func (c *adminServiceClient) AddDoctor(ctx context.Context, in *AddDoctorRequest
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility
 type AdminServiceServer interface {
-	SignIn(context.Context, *SingInRequest) (*SignInResponse, error)
+	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
 	AddDoctor(context.Context, *AddDoctorRequest) (*AddDoctorResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
@@ -60,7 +60,7 @@ type AdminServiceServer interface {
 type UnimplementedAdminServiceServer struct {
 }
 
-func (UnimplementedAdminServiceServer) SignIn(context.Context, *SingInRequest) (*SignInResponse, error) {
+func (UnimplementedAdminServiceServer) SignIn(context.Context, *SignInRequest) (*SignInResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
 func (UnimplementedAdminServiceServer) AddDoctor(context.Context, *AddDoctorRequest) (*AddDoctorResponse, error) {
@@ -80,7 +80,7 @@ func RegisterAdminServiceServer(s *grpc.Server, srv AdminServiceServer) {
 }
 
 func _AdminService_SignIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SingInRequest)
+	in := new(SignInRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -92,7 +92,7 @@ func _AdminService_SignIn_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/admin.AdminService/SignIn",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServiceServer).SignIn(ctx, req.(*SingInRequest))
+		return srv.(AdminServiceServer).SignIn(ctx, req.(*SignInRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

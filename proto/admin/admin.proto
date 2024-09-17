@@ -6,11 +6,11 @@ option go_package = "github.com/NUHMANUDHEENT/hosp-connect-proto/proto/admin;adm
 ;
 
 service AdminService{
-    rpc SignIn (SingInRequest) returns (SignInResponse);
+    rpc SignIn (SignInRequest) returns (SignInResponse);
     rpc AddDoctor (AddDoctorRequest) returns (AddDoctorResponse);
 }
 
-message SingInRequest{
+message SignInRequest{
     string email = 1;
     string password = 2;   
 }

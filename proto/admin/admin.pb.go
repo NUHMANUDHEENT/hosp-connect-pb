@@ -20,7 +20,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type SingInRequest struct {
+type SignInRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -29,8 +29,8 @@ type SingInRequest struct {
 	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
 }
 
-func (x *SingInRequest) Reset() {
-	*x = SingInRequest{}
+func (x *SignInRequest) Reset() {
+	*x = SignInRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_admin_admin_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -38,13 +38,13 @@ func (x *SingInRequest) Reset() {
 	}
 }
 
-func (x *SingInRequest) String() string {
+func (x *SignInRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SingInRequest) ProtoMessage() {}
+func (*SignInRequest) ProtoMessage() {}
 
-func (x *SingInRequest) ProtoReflect() protoreflect.Message {
+func (x *SignInRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_admin_admin_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -56,19 +56,19 @@ func (x *SingInRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SingInRequest.ProtoReflect.Descriptor instead.
-func (*SingInRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use SignInRequest.ProtoReflect.Descriptor instead.
+func (*SignInRequest) Descriptor() ([]byte, []int) {
 	return file_proto_admin_admin_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *SingInRequest) GetEmail() string {
+func (x *SignInRequest) GetEmail() string {
 	if x != nil {
 		return x.Email
 	}
 	return ""
 }
 
-func (x *SingInRequest) GetPassword() string {
+func (x *SignInRequest) GetPassword() string {
 	if x != nil {
 		return x.Password
 	}
@@ -253,7 +253,7 @@ var File_proto_admin_admin_proto protoreflect.FileDescriptor
 var file_proto_admin_admin_proto_rawDesc = []byte{
 	0x0a, 0x17, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x61, 0x64, 0x6d, 0x69, 0x6e, 0x2f, 0x61, 0x64,
 	0x6d, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x05, 0x61, 0x64, 0x6d, 0x69, 0x6e,
-	0x22, 0x41, 0x0a, 0x0d, 0x53, 0x69, 0x6e, 0x67, 0x49, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x22, 0x41, 0x0a, 0x0d, 0x53, 0x69, 0x67, 0x6e, 0x49, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77,
 	0x6f, 0x72, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77,
@@ -275,7 +275,7 @@ var file_proto_admin_admin_proto_rawDesc = []byte{
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x32, 0x85, 0x01,
 	0x0a, 0x0c, 0x41, 0x64, 0x6d, 0x69, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x35,
 	0x0a, 0x06, 0x53, 0x69, 0x67, 0x6e, 0x49, 0x6e, 0x12, 0x14, 0x2e, 0x61, 0x64, 0x6d, 0x69, 0x6e,
-	0x2e, 0x53, 0x69, 0x6e, 0x67, 0x49, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15,
+	0x2e, 0x53, 0x69, 0x67, 0x6e, 0x49, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15,
 	0x2e, 0x61, 0x64, 0x6d, 0x69, 0x6e, 0x2e, 0x53, 0x69, 0x67, 0x6e, 0x49, 0x6e, 0x52, 0x65, 0x73,
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3e, 0x0a, 0x09, 0x41, 0x64, 0x64, 0x44, 0x6f, 0x63, 0x74,
 	0x6f, 0x72, 0x12, 0x17, 0x2e, 0x61, 0x64, 0x6d, 0x69, 0x6e, 0x2e, 0x41, 0x64, 0x64, 0x44, 0x6f,
@@ -302,13 +302,13 @@ func file_proto_admin_admin_proto_rawDescGZIP() []byte {
 
 var file_proto_admin_admin_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_proto_admin_admin_proto_goTypes = []interface{}{
-	(*SingInRequest)(nil),     // 0: admin.SingInRequest
+	(*SignInRequest)(nil),     // 0: admin.SignInRequest
 	(*SignInResponse)(nil),    // 1: admin.SignInResponse
 	(*AddDoctorRequest)(nil),  // 2: admin.AddDoctorRequest
 	(*AddDoctorResponse)(nil), // 3: admin.AddDoctorResponse
 }
 var file_proto_admin_admin_proto_depIdxs = []int32{
-	0, // 0: admin.AdminService.SignIn:input_type -> admin.SingInRequest
+	0, // 0: admin.AdminService.SignIn:input_type -> admin.SignInRequest
 	2, // 1: admin.AdminService.AddDoctor:input_type -> admin.AddDoctorRequest
 	1, // 2: admin.AdminService.SignIn:output_type -> admin.SignInResponse
 	3, // 3: admin.AdminService.AddDoctor:output_type -> admin.AddDoctorResponse
@@ -326,7 +326,7 @@ func file_proto_admin_admin_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_proto_admin_admin_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SingInRequest); i {
+			switch v := v.(*SignInRequest); i {
 			case 0:
 				return &v.state
 			case 1:
