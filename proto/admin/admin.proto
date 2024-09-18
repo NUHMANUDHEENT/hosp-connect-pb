@@ -2,14 +2,37 @@ syntax = "proto3";
 
 package admin;
 
-option go_package = "github.com/NUHMANUDHEENT/hosp-connect-proto/proto/admin;admin";
-;
+option go_package = "/proto/admin";
 
-service AdminService{
-    rpc SignIn (SignInRequest) returns (SignInResponse);
-    rpc AddDoctor (AddDoctorRequest) returns (AddDoctorResponse);
+// AdminService defines the gRPC service for admin-related functionalities
+service AdminService {
+  
+  // SignIn method for admin users
+  rpc SignIn(SignInRequest) returns (SignInResponse);
+  
+  // AddDoctor method for adding a new doctor
+  rpc AddDoctor(AddDoctorRequest) returns (DoctorResponse);
+  
+  // UpdateDoctor method for updating doctor details
+  rpc UpdateDoctor(UpdateDoctorRequest) returns (DoctorResponse);
+  
+  // DeleteDoctor method for deleting a doctor by ID
+  rpc DeleteDoctor(DeleteDoctorRequest) returns (DoctorResponse);
+  
+  // CreatePatient method for adding a new patient
+  rpc CreatePatient(CreatePatientRequest) returns (PatientResponse);
+  
+  // UpdatePatient method for updating patient details
+  rpc UpdatePatient(UpdatePatientRequest) returns (PatientResponse);
+  
+  // DeletePatient method for deleting a patient by ID
+  rpc DeletePatient(DeletePatientRequest) returns (PatientResponse);
+  
+  // ViewStatistics method for retrieving hospital statistics
+  rpc ViewStatistics(ViewStatisticsRequest) returns (ViewStatisticsResponse);
 }
 
+// Request and Response Messages
 
 message SignInRequest {
   string email = 1;
@@ -17,17 +40,76 @@ message SignInRequest {
 }
 
 message SignInResponse {
-  bool success = 1;
+  bool Success = 1;
   string message = 2;
+  string token = 3; // JWT token or session token
 }
 
-message AddDoctorRequest{
-    string name = 1;
-    string email = 2;
-    string password = 3;
-    string specialization = 4;
-    string doctorId = 5;
+// Doctor-related messages
+
+message AddDoctorRequest {
+  string name = 1;
+  string specialization = 2;
+  string phone = 3;
+  string email = 4;
+  string password = 5;
 }
-message AddDoctorResponse{
-    string message =1;
+
+message UpdateDoctorRequest {
+  string doctor_id = 1;
+  string name = 2;
+  string specialization = 3;
+  string phone = 4;
+  string email = 5;
+}
+
+message DeleteDoctorRequest {
+  string doctor_id = 1;
+}
+
+message DoctorResponse {
+  string message = 1;
+  string doctor_id = 2;
+}
+
+// Patient-related messages
+
+message CreatePatientRequest {
+  string name = 1;
+  int32 age = 2;
+  string phone = 3;
+  string email = 4;
+  string password = 5;
+  string gender = 6;
+}
+
+message UpdatePatientRequest {
+  string patient_id = 1;
+  string name = 2;
+  int32 age = 3;
+  string phone = 4;
+  string email = 5;
+  string address = 6;
+}
+
+message DeletePatientRequest {
+  string patient_id = 1;
+}
+
+message PatientResponse {
+  string message = 1;
+  string patient_id = 2;
+}
+
+// Statistics-related messages
+
+message ViewStatisticsRequest {
+  // Any filter criteria for viewing statistics (optional)
+}
+
+message ViewStatisticsResponse {
+  int32 total_doctors = 1;
+  int32 total_patients = 2;
+  int32 total_appointments = 3;
+  float revenue = 4; // Optional: hospital's total revenue
 }

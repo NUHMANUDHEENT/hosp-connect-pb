@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package doctor;
+
+option go_package = "/proto/doctor";
+
+// The Doctor service definition.
+service DoctorService {
+  // Doctor SignIn
+  rpc SignIn (SignInRequest) returns (SignInResponse);
+
+  // Update doctor profile details
+  rpc UpdateDoctorProfile (UpdateDoctorProfileRequest) returns (UpdateDoctorProfileResponse);
+
+  // Update doctor schedule for one week with 30-minute slots
+  rpc UpdateSchedule (UpdateScheduleRequest) returns (UpdateScheduleResponse);
+
+  // Add a prescription for a patient
+  rpc AddPrescription (AddPrescriptionRequest) returns (AddPrescriptionResponse);
+
+  // Get past prescriptions for a specific patient
+  rpc GetPastPrescriptions (GetPastPrescriptionsRequest) returns (GetPastPrescriptionsResponse);
+}
+
+// Request and Response messages for SignIn
+message SignInRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message SignInResponse {
+  string token = 1;
+  string message = 2;
+}
+
+// Request and Response messages for UpdateDoctorProfile
+message UpdateDoctorProfileRequest {
+  string doctor_id = 1;
+  string name = 2;
+  string specialization = 3;
+  string contact_number = 4;
+}
+
+message UpdateDoctorProfileResponse {
+  string message = 1;
+}
+
+// Request and Response messages for UpdateSchedule
+message UpdateScheduleRequest {
+  string doctor_id = 1;
+  repeated ScheduleEntry schedule_entries = 2; // Week's schedule (each entry is 30-min slots)
+}
+
+message UpdateScheduleResponse {
+  string message = 1;
+}
+
+// Schedule entry for a specific day and time slot
+message ScheduleEntry {
+  string date = 1;       // e.g., "2024-09-18"
+  string start_time = 2;  // e.g., "09:00"
+  string end_time = 3;    // e.g., "09:30"
+  string status = 4;      // "available", "booked", "cancelled"
+}
+
+// Request and Response messages for AddPrescription
+message AddPrescriptionRequest {
+  string doctor_id = 1;
+  string patient_id = 2;
+  string patient_name = 3;
+  string prescription_details = 4;
+}
+
+message AddPrescriptionResponse {
+  string message = 1;
+}
+
+// Request and Response messages for GetPastPrescriptions
+message GetPastPrescriptionsRequest {
+  string doctor_id = 1;
+  string patient_name = 2;
+}
+
+message GetPastPrescriptionsResponse {
+  repeated PrescriptionEntry prescriptions = 1;
+}
+
+// Prescription entry details
+message PrescriptionEntry {
+  string prescription_id = 1;
+  string patient_name = 2;
+  string prescription_details = 3;
+  string issued_date = 4; // Date when prescription was issued
+}

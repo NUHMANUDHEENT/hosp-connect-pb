@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package patient;
+
+option go_package = "/proto/patient";
+
+// The Patient service definition.
+service PatientService {
+  // Patient SignUp
+  rpc SignUp (SignUpRequest) returns (SignUpResponse);
+
+  // Patient SignIn
+  rpc SignIn (SignInRequest) returns (SignInResponse);
+
+  // Get patient profile
+  rpc GetPatientProfile (GetPatientProfileRequest) returns (GetPatientProfileResponse);
+
+  // Update patient profile
+  rpc UpdatePatientProfile (UpdatePatientProfileRequest) returns (UpdatePatientProfileResponse);
+}
+
+// Request and Response messages for SignUp
+message SignUpRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string phone = 4;
+  int32 age = 5;
+  string gender = 6;
+}
+
+message SignUpResponse {
+  string patient_id = 1;
+  string message = 2;
+}
+
+// Request and Response messages for SignIn
+message SignInRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message SignInResponse {
+  string token = 1;
+  string message = 2;
+}
+
+// Request and Response messages for GetPatientProfile
+message GetPatientProfileRequest {
+  string patient_id = 1;
+}
+
+message GetPatientProfileResponse {
+  string patient_id = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+  int32 age = 5;
+  string gender = 6;
+  string medical_history = 7;  // Optional field for storing medical history
+}
+
+// Request and Response messages for UpdatePatientProfile
+message UpdatePatientProfileRequest {
+  string patient_id = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+  int32 age = 5;
+  string gender = 6;
+  string medical_history = 7;  // Optional field for updating medical history
+}
+
+message UpdatePatientProfileResponse {
+  string message = 1;
+}
