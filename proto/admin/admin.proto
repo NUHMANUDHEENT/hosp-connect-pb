@@ -10,13 +10,17 @@ service AdminService{
     rpc AddDoctor (AddDoctorRequest) returns (AddDoctorResponse);
 }
 
-message SignInRequest{
-    string email = 1;
-    string password = 2;   
+
+message SignInRequest {
+  string email = 1;
+  string password = 2;
 }
-message SignInResponse{
-    string message = 1;
+
+message SignInResponse {
+  bool success = 1;
+  string message = 2;
 }
+
 message AddDoctorRequest{
     string name = 1;
     string email = 2;
