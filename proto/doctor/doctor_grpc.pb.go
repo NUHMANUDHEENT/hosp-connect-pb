@@ -27,6 +27,7 @@ type DoctorServiceClient interface {
 	AddPrescription(ctx context.Context, in *AddPrescriptionRequest, opts ...grpc.CallOption) (*AddPrescriptionResponse, error)
 	// Get past prescriptions for a specific patient
 	GetPastPrescriptions(ctx context.Context, in *GetPastPrescriptionsRequest, opts ...grpc.CallOption) (*GetPastPrescriptionsResponse, error)
+	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error)
 }
 
 type doctorServiceClient struct {
@@ -82,6 +83,15 @@ func (c *doctorServiceClient) GetPastPrescriptions(ctx context.Context, in *GetP
 	return out, nil
 }
 
+func (c *doctorServiceClient) AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error) {
+	out := new(DoctorResponse)
+	err := c.cc.Invoke(ctx, "/doctor.DoctorService/AddDoctor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DoctorServiceServer is the server API for DoctorService service.
 // All implementations must embed UnimplementedDoctorServiceServer
 // for forward compatibility
@@ -96,6 +106,7 @@ type DoctorServiceServer interface {
 	AddPrescription(context.Context, *AddPrescriptionRequest) (*AddPrescriptionResponse, error)
 	// Get past prescriptions for a specific patient
 	GetPastPrescriptions(context.Context, *GetPastPrescriptionsRequest) (*GetPastPrescriptionsResponse, error)
+	AddDoctor(context.Context, *AddDoctorRequest) (*DoctorResponse, error)
 	mustEmbedUnimplementedDoctorServiceServer()
 }
 
@@ -117,6 +128,9 @@ func (UnimplementedDoctorServiceServer) AddPrescription(context.Context, *AddPre
 }
 func (UnimplementedDoctorServiceServer) GetPastPrescriptions(context.Context, *GetPastPrescriptionsRequest) (*GetPastPrescriptionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPastPrescriptions not implemented")
+}
+func (UnimplementedDoctorServiceServer) AddDoctor(context.Context, *AddDoctorRequest) (*DoctorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddDoctor not implemented")
 }
 func (UnimplementedDoctorServiceServer) mustEmbedUnimplementedDoctorServiceServer() {}
 
@@ -221,6 +235,24 @@ func _DoctorService_GetPastPrescriptions_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DoctorService_AddDoctor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddDoctorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DoctorServiceServer).AddDoctor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/doctor.DoctorService/AddDoctor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DoctorServiceServer).AddDoctor(ctx, req.(*AddDoctorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _DoctorService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "doctor.DoctorService",
 	HandlerType: (*DoctorServiceServer)(nil),
@@ -245,7 +277,11 @@ var _DoctorService_serviceDesc = grpc.ServiceDesc{
 			MethodName: "GetPastPrescriptions",
 			Handler:    _DoctorService_GetPastPrescriptions_Handler,
 		},
+		{
+			MethodName: "AddDoctor",
+			Handler:    _DoctorService_AddDoctor_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/doctor/doctor.proto",
+	Metadata: "doctor/doctor.proto",
 }

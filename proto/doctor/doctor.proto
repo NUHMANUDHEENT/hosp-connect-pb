@@ -20,6 +20,9 @@ service DoctorService {
 
   // Get past prescriptions for a specific patient
   rpc GetPastPrescriptions (GetPastPrescriptionsRequest) returns (GetPastPrescriptionsResponse);
+
+  rpc AddDoctor(AddDoctorRequest) returns (DoctorResponse);
+
 }
 
 // Request and Response messages for SignIn
@@ -33,11 +36,25 @@ message SignInResponse {
   string message = 2;
 }
 
+
+message AddDoctorRequest {
+  string name = 1;
+  int32 specializationId = 2;
+  string phone = 3;
+  string email = 4;
+  string password = 5;
+}
+
+
+message DoctorResponse {
+  string message = 1;
+  string doctor_id = 2;
+}
 // Request and Response messages for UpdateDoctorProfile
 message UpdateDoctorProfileRequest {
   string doctor_id = 1;
   string name = 2;
-  string specialization = 3;
+  int32 specializationId = 3;
   string contact_number = 4;
 }
 

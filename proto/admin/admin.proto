@@ -49,7 +49,7 @@ message SignInResponse {
 
 message AddDoctorRequest {
   string name = 1;
-  string specialization = 2;
+  int32 specializationId = 2;
   string phone = 3;
   string email = 4;
   string password = 5;
@@ -58,7 +58,7 @@ message AddDoctorRequest {
 message UpdateDoctorRequest {
   string doctor_id = 1;
   string name = 2;
-  string specialization = 3;
+  int32 specializationId = 3;
   string phone = 4;
   string email = 5;
 }
