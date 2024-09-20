@@ -40,7 +40,7 @@ message SignInResponse {
 message AddDoctorRequest {
   string name = 1;
   int32 specializationId = 2;
-  string phone = 3;
+  int32 phone = 3;
   string email = 4;
   string password = 5;
 }
@@ -52,10 +52,12 @@ message DoctorResponse {
 }
 // Request and Response messages for UpdateDoctorProfile
 message UpdateDoctorProfileRequest {
-  string doctor_id = 1;
-  string name = 2;
-  int32 specializationId = 3;
-  string contact_number = 4;
+  string name = 1;
+  int32 specializationId = 2;
+  int32 phone = 3;
+  string email = 4;
+  string password = 5;
+
 }
 
 message UpdateDoctorProfileResponse {

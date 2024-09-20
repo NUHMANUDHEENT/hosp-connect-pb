@@ -361,5 +361,5 @@ var _AdminService_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "admin.proto",
+	Metadata: "admin/admin.proto",
 }

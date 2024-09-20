@@ -50,7 +50,7 @@ message SignInResponse {
 message AddDoctorRequest {
   string name = 1;
   int32 specializationId = 2;
-  string phone = 3;
+  int32 phone = 3;
   string email = 4;
   string password = 5;
 }
@@ -59,7 +59,7 @@ message UpdateDoctorRequest {
   string doctor_id = 1;
   string name = 2;
   int32 specializationId = 3;
-  string phone = 4;
+  int32 phone = 4;
   string email = 5;
 }
 
@@ -77,7 +77,7 @@ message DoctorResponse {
 message CreatePatientRequest {
   string name = 1;
   int32 age = 2;
-  string phone = 3;
+  int32 phone = 3;
   string email = 4;
   string password = 5;
   string gender = 6;
@@ -87,7 +87,7 @@ message UpdatePatientRequest {
   string patient_id = 1;
   string name = 2;
   int32 age = 3;
-  string phone = 4;
+  int32 phone = 4;
   string email = 5;
   string address = 6;
 }
