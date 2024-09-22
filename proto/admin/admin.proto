@@ -18,20 +18,10 @@ service AdminService {
   // UpdateDoctor method for updating doctor details
   rpc UpdateDoctor(UpdateDoctorRequest) returns (StandardResponse);
   
-  // DeleteDoctor method for deleting a doctor by ID
   rpc DeleteDoctor(DeleteDoctorRequest) returns (StandardResponse);
-  
-  // CreatePatient method for adding a new patient
-  rpc CreatePatient(CreatePatientRequest) returns (StandardResponse);
-  
-  // UpdatePatient method for updating patient details
-  rpc UpdatePatient(UpdatePatientRequest) returns (StandardResponse);
-  
-  // DeletePatient method for deleting a patient by ID
+  rpc AddPatient(AddPatientRequest) returns (StandardResponse);
   rpc DeletePatient(DeletePatientRequest) returns (StandardResponse);
-  
-  // ViewStatistics method for retrieving hospital statistics
-  rpc ViewStatistics(ViewStatisticsRequest) returns (StandardResponse);
+  rpc BlockPatient(BlockPatientRequest) returns (StandardResponse);
 }
 
 // Request and Response Messages
@@ -56,34 +46,30 @@ message UpdateDoctorRequest {
   int32 phone = 4;
   string email = 5;
 }
-message DeleteDoctorRequest{
-  string doctor_id = 1;
+// Doctor Delete Request
+message DeleteDoctorRequest {
+  string doctor_id = 1; // The ID of the doctor to delete
 }
 
-// Patient-related messages
-
-message CreatePatientRequest {
-  string name = 1;
-  int32 age = 2;
-  int32 phone = 3;
-  string email = 4;
-  string password = 5;
-  string gender = 6;
-}
-
-message UpdatePatientRequest {
-  string patient_id = 1;
-  string name = 2;
-  int32 age = 3;
+// Patient Add Request
+message AddPatientRequest {
+  string email = 1;
+  string password = 2;
+  string name = 3;
   int32 phone = 4;
-  string email = 5;
-  string address = 6;
+  string address = 5;
 }
 
+// Patient Delete Request
 message DeletePatientRequest {
-  string patient_id = 1;
+  string patient_id = 1; // The ID of the patient to delete
 }
 
+// Patient Block Request
+message BlockPatientRequest {
+  string patient_id = 1; // The ID of the patient to block
+  string reason = 2;     // Optional reason for blocking
+}
 
 message ViewStatisticsRequest {
 }

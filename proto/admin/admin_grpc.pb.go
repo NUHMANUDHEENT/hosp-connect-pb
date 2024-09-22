@@ -23,16 +23,10 @@ type AdminServiceClient interface {
 	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// UpdateDoctor method for updating doctor details
 	UpdateDoctor(ctx context.Context, in *UpdateDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	// DeleteDoctor method for deleting a doctor by ID
 	DeleteDoctor(ctx context.Context, in *DeleteDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	// CreatePatient method for adding a new patient
-	CreatePatient(ctx context.Context, in *CreatePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	// UpdatePatient method for updating patient details
-	UpdatePatient(ctx context.Context, in *UpdatePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	// DeletePatient method for deleting a patient by ID
+	AddPatient(ctx context.Context, in *AddPatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	DeletePatient(ctx context.Context, in *DeletePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	// ViewStatistics method for retrieving hospital statistics
-	ViewStatistics(ctx context.Context, in *ViewStatisticsRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	BlockPatient(ctx context.Context, in *BlockPatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 }
 
 type adminServiceClient struct {
@@ -79,18 +73,9 @@ func (c *adminServiceClient) DeleteDoctor(ctx context.Context, in *DeleteDoctorR
 	return out, nil
 }
 
-func (c *adminServiceClient) CreatePatient(ctx context.Context, in *CreatePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+func (c *adminServiceClient) AddPatient(ctx context.Context, in *AddPatientRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
 	out := new(StandardResponse)
-	err := c.cc.Invoke(ctx, "/admin.AdminService/CreatePatient", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminServiceClient) UpdatePatient(ctx context.Context, in *UpdatePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
-	out := new(StandardResponse)
-	err := c.cc.Invoke(ctx, "/admin.AdminService/UpdatePatient", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.AdminService/AddPatient", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -106,9 +91,9 @@ func (c *adminServiceClient) DeletePatient(ctx context.Context, in *DeletePatien
 	return out, nil
 }
 
-func (c *adminServiceClient) ViewStatistics(ctx context.Context, in *ViewStatisticsRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+func (c *adminServiceClient) BlockPatient(ctx context.Context, in *BlockPatientRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
 	out := new(StandardResponse)
-	err := c.cc.Invoke(ctx, "/admin.AdminService/ViewStatistics", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.AdminService/BlockPatient", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -125,16 +110,10 @@ type AdminServiceServer interface {
 	AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error)
 	// UpdateDoctor method for updating doctor details
 	UpdateDoctor(context.Context, *UpdateDoctorRequest) (*StandardResponse, error)
-	// DeleteDoctor method for deleting a doctor by ID
 	DeleteDoctor(context.Context, *DeleteDoctorRequest) (*StandardResponse, error)
-	// CreatePatient method for adding a new patient
-	CreatePatient(context.Context, *CreatePatientRequest) (*StandardResponse, error)
-	// UpdatePatient method for updating patient details
-	UpdatePatient(context.Context, *UpdatePatientRequest) (*StandardResponse, error)
-	// DeletePatient method for deleting a patient by ID
+	AddPatient(context.Context, *AddPatientRequest) (*StandardResponse, error)
 	DeletePatient(context.Context, *DeletePatientRequest) (*StandardResponse, error)
-	// ViewStatistics method for retrieving hospital statistics
-	ViewStatistics(context.Context, *ViewStatisticsRequest) (*StandardResponse, error)
+	BlockPatient(context.Context, *BlockPatientRequest) (*StandardResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -154,17 +133,14 @@ func (UnimplementedAdminServiceServer) UpdateDoctor(context.Context, *UpdateDoct
 func (UnimplementedAdminServiceServer) DeleteDoctor(context.Context, *DeleteDoctorRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDoctor not implemented")
 }
-func (UnimplementedAdminServiceServer) CreatePatient(context.Context, *CreatePatientRequest) (*StandardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatePatient not implemented")
-}
-func (UnimplementedAdminServiceServer) UpdatePatient(context.Context, *UpdatePatientRequest) (*StandardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePatient not implemented")
+func (UnimplementedAdminServiceServer) AddPatient(context.Context, *AddPatientRequest) (*StandardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddPatient not implemented")
 }
 func (UnimplementedAdminServiceServer) DeletePatient(context.Context, *DeletePatientRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePatient not implemented")
 }
-func (UnimplementedAdminServiceServer) ViewStatistics(context.Context, *ViewStatisticsRequest) (*StandardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ViewStatistics not implemented")
+func (UnimplementedAdminServiceServer) BlockPatient(context.Context, *BlockPatientRequest) (*StandardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BlockPatient not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 
@@ -251,38 +227,20 @@ func _AdminService_DeleteDoctor_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminService_CreatePatient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePatientRequest)
+func _AdminService_AddPatient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddPatientRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminServiceServer).CreatePatient(ctx, in)
+		return srv.(AdminServiceServer).AddPatient(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/admin.AdminService/CreatePatient",
+		FullMethod: "/admin.AdminService/AddPatient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServiceServer).CreatePatient(ctx, req.(*CreatePatientRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminService_UpdatePatient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePatientRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminServiceServer).UpdatePatient(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/admin.AdminService/UpdatePatient",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServiceServer).UpdatePatient(ctx, req.(*UpdatePatientRequest))
+		return srv.(AdminServiceServer).AddPatient(ctx, req.(*AddPatientRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -305,20 +263,20 @@ func _AdminService_DeletePatient_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminService_ViewStatistics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ViewStatisticsRequest)
+func _AdminService_BlockPatient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BlockPatientRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminServiceServer).ViewStatistics(ctx, in)
+		return srv.(AdminServiceServer).BlockPatient(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/admin.AdminService/ViewStatistics",
+		FullMethod: "/admin.AdminService/BlockPatient",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServiceServer).ViewStatistics(ctx, req.(*ViewStatisticsRequest))
+		return srv.(AdminServiceServer).BlockPatient(ctx, req.(*BlockPatientRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -344,20 +302,16 @@ var _AdminService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _AdminService_DeleteDoctor_Handler,
 		},
 		{
-			MethodName: "CreatePatient",
-			Handler:    _AdminService_CreatePatient_Handler,
-		},
-		{
-			MethodName: "UpdatePatient",
-			Handler:    _AdminService_UpdatePatient_Handler,
+			MethodName: "AddPatient",
+			Handler:    _AdminService_AddPatient_Handler,
 		},
 		{
 			MethodName: "DeletePatient",
 			Handler:    _AdminService_DeletePatient_Handler,
 		},
 		{
-			MethodName: "ViewStatistics",
-			Handler:    _AdminService_ViewStatistics_Handler,
+			MethodName: "BlockPatient",
+			Handler:    _AdminService_BlockPatient_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
