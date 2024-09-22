@@ -18,21 +18,21 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdminServiceClient interface {
 	// SignIn method for admin users
-	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
+	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// AddDoctor method for adding a new doctor
-	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error)
+	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// UpdateDoctor method for updating doctor details
-	UpdateDoctor(ctx context.Context, in *UpdateDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error)
+	UpdateDoctor(ctx context.Context, in *UpdateDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// DeleteDoctor method for deleting a doctor by ID
-	DeleteDoctor(ctx context.Context, in *DeleteDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error)
+	DeleteDoctor(ctx context.Context, in *DeleteDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// CreatePatient method for adding a new patient
-	CreatePatient(ctx context.Context, in *CreatePatientRequest, opts ...grpc.CallOption) (*PatientResponse, error)
+	CreatePatient(ctx context.Context, in *CreatePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// UpdatePatient method for updating patient details
-	UpdatePatient(ctx context.Context, in *UpdatePatientRequest, opts ...grpc.CallOption) (*PatientResponse, error)
+	UpdatePatient(ctx context.Context, in *UpdatePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// DeletePatient method for deleting a patient by ID
-	DeletePatient(ctx context.Context, in *DeletePatientRequest, opts ...grpc.CallOption) (*PatientResponse, error)
+	DeletePatient(ctx context.Context, in *DeletePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// ViewStatistics method for retrieving hospital statistics
-	ViewStatistics(ctx context.Context, in *ViewStatisticsRequest, opts ...grpc.CallOption) (*ViewStatisticsResponse, error)
+	ViewStatistics(ctx context.Context, in *ViewStatisticsRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 }
 
 type adminServiceClient struct {
@@ -43,8 +43,8 @@ func NewAdminServiceClient(cc grpc.ClientConnInterface) AdminServiceClient {
 	return &adminServiceClient{cc}
 }
 
-func (c *adminServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
-	out := new(SignInResponse)
+func (c *adminServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/SignIn", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -52,8 +52,8 @@ func (c *adminServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts
 	return out, nil
 }
 
-func (c *adminServiceClient) AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error) {
-	out := new(DoctorResponse)
+func (c *adminServiceClient) AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/AddDoctor", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -61,8 +61,8 @@ func (c *adminServiceClient) AddDoctor(ctx context.Context, in *AddDoctorRequest
 	return out, nil
 }
 
-func (c *adminServiceClient) UpdateDoctor(ctx context.Context, in *UpdateDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error) {
-	out := new(DoctorResponse)
+func (c *adminServiceClient) UpdateDoctor(ctx context.Context, in *UpdateDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/UpdateDoctor", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -70,8 +70,8 @@ func (c *adminServiceClient) UpdateDoctor(ctx context.Context, in *UpdateDoctorR
 	return out, nil
 }
 
-func (c *adminServiceClient) DeleteDoctor(ctx context.Context, in *DeleteDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error) {
-	out := new(DoctorResponse)
+func (c *adminServiceClient) DeleteDoctor(ctx context.Context, in *DeleteDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/DeleteDoctor", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -79,8 +79,8 @@ func (c *adminServiceClient) DeleteDoctor(ctx context.Context, in *DeleteDoctorR
 	return out, nil
 }
 
-func (c *adminServiceClient) CreatePatient(ctx context.Context, in *CreatePatientRequest, opts ...grpc.CallOption) (*PatientResponse, error) {
-	out := new(PatientResponse)
+func (c *adminServiceClient) CreatePatient(ctx context.Context, in *CreatePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/CreatePatient", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -88,8 +88,8 @@ func (c *adminServiceClient) CreatePatient(ctx context.Context, in *CreatePatien
 	return out, nil
 }
 
-func (c *adminServiceClient) UpdatePatient(ctx context.Context, in *UpdatePatientRequest, opts ...grpc.CallOption) (*PatientResponse, error) {
-	out := new(PatientResponse)
+func (c *adminServiceClient) UpdatePatient(ctx context.Context, in *UpdatePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/UpdatePatient", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -97,8 +97,8 @@ func (c *adminServiceClient) UpdatePatient(ctx context.Context, in *UpdatePatien
 	return out, nil
 }
 
-func (c *adminServiceClient) DeletePatient(ctx context.Context, in *DeletePatientRequest, opts ...grpc.CallOption) (*PatientResponse, error) {
-	out := new(PatientResponse)
+func (c *adminServiceClient) DeletePatient(ctx context.Context, in *DeletePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/DeletePatient", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -106,8 +106,8 @@ func (c *adminServiceClient) DeletePatient(ctx context.Context, in *DeletePatien
 	return out, nil
 }
 
-func (c *adminServiceClient) ViewStatistics(ctx context.Context, in *ViewStatisticsRequest, opts ...grpc.CallOption) (*ViewStatisticsResponse, error) {
-	out := new(ViewStatisticsResponse)
+func (c *adminServiceClient) ViewStatistics(ctx context.Context, in *ViewStatisticsRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/ViewStatistics", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -120,21 +120,21 @@ func (c *adminServiceClient) ViewStatistics(ctx context.Context, in *ViewStatist
 // for forward compatibility
 type AdminServiceServer interface {
 	// SignIn method for admin users
-	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
+	SignIn(context.Context, *SignInRequest) (*StandardResponse, error)
 	// AddDoctor method for adding a new doctor
-	AddDoctor(context.Context, *AddDoctorRequest) (*DoctorResponse, error)
+	AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error)
 	// UpdateDoctor method for updating doctor details
-	UpdateDoctor(context.Context, *UpdateDoctorRequest) (*DoctorResponse, error)
+	UpdateDoctor(context.Context, *UpdateDoctorRequest) (*StandardResponse, error)
 	// DeleteDoctor method for deleting a doctor by ID
-	DeleteDoctor(context.Context, *DeleteDoctorRequest) (*DoctorResponse, error)
+	DeleteDoctor(context.Context, *DeleteDoctorRequest) (*StandardResponse, error)
 	// CreatePatient method for adding a new patient
-	CreatePatient(context.Context, *CreatePatientRequest) (*PatientResponse, error)
+	CreatePatient(context.Context, *CreatePatientRequest) (*StandardResponse, error)
 	// UpdatePatient method for updating patient details
-	UpdatePatient(context.Context, *UpdatePatientRequest) (*PatientResponse, error)
+	UpdatePatient(context.Context, *UpdatePatientRequest) (*StandardResponse, error)
 	// DeletePatient method for deleting a patient by ID
-	DeletePatient(context.Context, *DeletePatientRequest) (*PatientResponse, error)
+	DeletePatient(context.Context, *DeletePatientRequest) (*StandardResponse, error)
 	// ViewStatistics method for retrieving hospital statistics
-	ViewStatistics(context.Context, *ViewStatisticsRequest) (*ViewStatisticsResponse, error)
+	ViewStatistics(context.Context, *ViewStatisticsRequest) (*StandardResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -142,28 +142,28 @@ type AdminServiceServer interface {
 type UnimplementedAdminServiceServer struct {
 }
 
-func (UnimplementedAdminServiceServer) SignIn(context.Context, *SignInRequest) (*SignInResponse, error) {
+func (UnimplementedAdminServiceServer) SignIn(context.Context, *SignInRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
-func (UnimplementedAdminServiceServer) AddDoctor(context.Context, *AddDoctorRequest) (*DoctorResponse, error) {
+func (UnimplementedAdminServiceServer) AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddDoctor not implemented")
 }
-func (UnimplementedAdminServiceServer) UpdateDoctor(context.Context, *UpdateDoctorRequest) (*DoctorResponse, error) {
+func (UnimplementedAdminServiceServer) UpdateDoctor(context.Context, *UpdateDoctorRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDoctor not implemented")
 }
-func (UnimplementedAdminServiceServer) DeleteDoctor(context.Context, *DeleteDoctorRequest) (*DoctorResponse, error) {
+func (UnimplementedAdminServiceServer) DeleteDoctor(context.Context, *DeleteDoctorRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDoctor not implemented")
 }
-func (UnimplementedAdminServiceServer) CreatePatient(context.Context, *CreatePatientRequest) (*PatientResponse, error) {
+func (UnimplementedAdminServiceServer) CreatePatient(context.Context, *CreatePatientRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePatient not implemented")
 }
-func (UnimplementedAdminServiceServer) UpdatePatient(context.Context, *UpdatePatientRequest) (*PatientResponse, error) {
+func (UnimplementedAdminServiceServer) UpdatePatient(context.Context, *UpdatePatientRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePatient not implemented")
 }
-func (UnimplementedAdminServiceServer) DeletePatient(context.Context, *DeletePatientRequest) (*PatientResponse, error) {
+func (UnimplementedAdminServiceServer) DeletePatient(context.Context, *DeletePatientRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePatient not implemented")
 }
-func (UnimplementedAdminServiceServer) ViewStatistics(context.Context, *ViewStatisticsRequest) (*ViewStatisticsResponse, error) {
+func (UnimplementedAdminServiceServer) ViewStatistics(context.Context, *ViewStatisticsRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ViewStatistics not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
