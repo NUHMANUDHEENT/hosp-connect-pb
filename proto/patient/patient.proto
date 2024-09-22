@@ -23,7 +23,7 @@ message SignUpRequest {
   string name = 1;
   string email = 2;
   string password = 3;
-  string phone = 4;
+  int32 phone = 4;
   int32 age = 5;
   string gender = 6;
 }
@@ -44,7 +44,7 @@ message UpdatePatientProfileRequest {
   string patient_id = 1;
   string name = 2;
   string email = 3;
-  string phone = 4;
+  int32 phone = 4;
   int32 age = 5;
   string gender = 6;
   string medical_history = 7;
