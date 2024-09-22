@@ -47,7 +47,7 @@ message UpdatePatientProfileRequest {
   string phone = 4;
   int32 age = 5;
   string gender = 6;
-  string medical_history = 7;  // Optional field for updating medical history
+  string medical_history = 7;
 }
 
 message StandardResponse {
