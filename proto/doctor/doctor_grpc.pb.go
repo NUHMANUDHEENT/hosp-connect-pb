@@ -18,16 +18,16 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DoctorServiceClient interface {
 	// Doctor SignIn
-	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
+	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// Update doctor profile details
-	UpdateDoctorProfile(ctx context.Context, in *UpdateDoctorProfileRequest, opts ...grpc.CallOption) (*UpdateDoctorProfileResponse, error)
+	UpdateDoctorProfile(ctx context.Context, in *UpdateDoctorProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// Update doctor schedule for one week with 30-minute slots
-	UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*UpdateScheduleResponse, error)
+	UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// Add a prescription for a patient
-	AddPrescription(ctx context.Context, in *AddPrescriptionRequest, opts ...grpc.CallOption) (*AddPrescriptionResponse, error)
+	AddPrescription(ctx context.Context, in *AddPrescriptionRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// Get past prescriptions for a specific patient
-	GetPastPrescriptions(ctx context.Context, in *GetPastPrescriptionsRequest, opts ...grpc.CallOption) (*GetPastPrescriptionsResponse, error)
-	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error)
+	GetPastPrescriptions(ctx context.Context, in *GetPastPrescriptionsRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 }
 
 type doctorServiceClient struct {
@@ -38,8 +38,8 @@ func NewDoctorServiceClient(cc grpc.ClientConnInterface) DoctorServiceClient {
 	return &doctorServiceClient{cc}
 }
 
-func (c *doctorServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
-	out := new(SignInResponse)
+func (c *doctorServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/doctor.DoctorService/SignIn", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -47,8 +47,8 @@ func (c *doctorServiceClient) SignIn(ctx context.Context, in *SignInRequest, opt
 	return out, nil
 }
 
-func (c *doctorServiceClient) UpdateDoctorProfile(ctx context.Context, in *UpdateDoctorProfileRequest, opts ...grpc.CallOption) (*UpdateDoctorProfileResponse, error) {
-	out := new(UpdateDoctorProfileResponse)
+func (c *doctorServiceClient) UpdateDoctorProfile(ctx context.Context, in *UpdateDoctorProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/doctor.DoctorService/UpdateDoctorProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -56,8 +56,8 @@ func (c *doctorServiceClient) UpdateDoctorProfile(ctx context.Context, in *Updat
 	return out, nil
 }
 
-func (c *doctorServiceClient) UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*UpdateScheduleResponse, error) {
-	out := new(UpdateScheduleResponse)
+func (c *doctorServiceClient) UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/doctor.DoctorService/UpdateSchedule", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -65,8 +65,8 @@ func (c *doctorServiceClient) UpdateSchedule(ctx context.Context, in *UpdateSche
 	return out, nil
 }
 
-func (c *doctorServiceClient) AddPrescription(ctx context.Context, in *AddPrescriptionRequest, opts ...grpc.CallOption) (*AddPrescriptionResponse, error) {
-	out := new(AddPrescriptionResponse)
+func (c *doctorServiceClient) AddPrescription(ctx context.Context, in *AddPrescriptionRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/doctor.DoctorService/AddPrescription", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -74,8 +74,8 @@ func (c *doctorServiceClient) AddPrescription(ctx context.Context, in *AddPrescr
 	return out, nil
 }
 
-func (c *doctorServiceClient) GetPastPrescriptions(ctx context.Context, in *GetPastPrescriptionsRequest, opts ...grpc.CallOption) (*GetPastPrescriptionsResponse, error) {
-	out := new(GetPastPrescriptionsResponse)
+func (c *doctorServiceClient) GetPastPrescriptions(ctx context.Context, in *GetPastPrescriptionsRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/doctor.DoctorService/GetPastPrescriptions", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -83,8 +83,8 @@ func (c *doctorServiceClient) GetPastPrescriptions(ctx context.Context, in *GetP
 	return out, nil
 }
 
-func (c *doctorServiceClient) AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*DoctorResponse, error) {
-	out := new(DoctorResponse)
+func (c *doctorServiceClient) AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/doctor.DoctorService/AddDoctor", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -97,16 +97,16 @@ func (c *doctorServiceClient) AddDoctor(ctx context.Context, in *AddDoctorReques
 // for forward compatibility
 type DoctorServiceServer interface {
 	// Doctor SignIn
-	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
+	SignIn(context.Context, *SignInRequest) (*StandardResponse, error)
 	// Update doctor profile details
-	UpdateDoctorProfile(context.Context, *UpdateDoctorProfileRequest) (*UpdateDoctorProfileResponse, error)
+	UpdateDoctorProfile(context.Context, *UpdateDoctorProfileRequest) (*StandardResponse, error)
 	// Update doctor schedule for one week with 30-minute slots
-	UpdateSchedule(context.Context, *UpdateScheduleRequest) (*UpdateScheduleResponse, error)
+	UpdateSchedule(context.Context, *UpdateScheduleRequest) (*StandardResponse, error)
 	// Add a prescription for a patient
-	AddPrescription(context.Context, *AddPrescriptionRequest) (*AddPrescriptionResponse, error)
+	AddPrescription(context.Context, *AddPrescriptionRequest) (*StandardResponse, error)
 	// Get past prescriptions for a specific patient
-	GetPastPrescriptions(context.Context, *GetPastPrescriptionsRequest) (*GetPastPrescriptionsResponse, error)
-	AddDoctor(context.Context, *AddDoctorRequest) (*DoctorResponse, error)
+	GetPastPrescriptions(context.Context, *GetPastPrescriptionsRequest) (*StandardResponse, error)
+	AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error)
 	mustEmbedUnimplementedDoctorServiceServer()
 }
 
@@ -114,22 +114,22 @@ type DoctorServiceServer interface {
 type UnimplementedDoctorServiceServer struct {
 }
 
-func (UnimplementedDoctorServiceServer) SignIn(context.Context, *SignInRequest) (*SignInResponse, error) {
+func (UnimplementedDoctorServiceServer) SignIn(context.Context, *SignInRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
-func (UnimplementedDoctorServiceServer) UpdateDoctorProfile(context.Context, *UpdateDoctorProfileRequest) (*UpdateDoctorProfileResponse, error) {
+func (UnimplementedDoctorServiceServer) UpdateDoctorProfile(context.Context, *UpdateDoctorProfileRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDoctorProfile not implemented")
 }
-func (UnimplementedDoctorServiceServer) UpdateSchedule(context.Context, *UpdateScheduleRequest) (*UpdateScheduleResponse, error) {
+func (UnimplementedDoctorServiceServer) UpdateSchedule(context.Context, *UpdateScheduleRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSchedule not implemented")
 }
-func (UnimplementedDoctorServiceServer) AddPrescription(context.Context, *AddPrescriptionRequest) (*AddPrescriptionResponse, error) {
+func (UnimplementedDoctorServiceServer) AddPrescription(context.Context, *AddPrescriptionRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddPrescription not implemented")
 }
-func (UnimplementedDoctorServiceServer) GetPastPrescriptions(context.Context, *GetPastPrescriptionsRequest) (*GetPastPrescriptionsResponse, error) {
+func (UnimplementedDoctorServiceServer) GetPastPrescriptions(context.Context, *GetPastPrescriptionsRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPastPrescriptions not implemented")
 }
-func (UnimplementedDoctorServiceServer) AddDoctor(context.Context, *AddDoctorRequest) (*DoctorResponse, error) {
+func (UnimplementedDoctorServiceServer) AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddDoctor not implemented")
 }
 func (UnimplementedDoctorServiceServer) mustEmbedUnimplementedDoctorServiceServer() {}

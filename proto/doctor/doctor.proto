@@ -2,26 +2,28 @@ syntax = "proto3";
 
 package doctor;
 
+import "google/protobuf/any.proto";
+
 option go_package = "/proto/doctor";
 
 // The Doctor service definition.
 service DoctorService {
   // Doctor SignIn
-  rpc SignIn (SignInRequest) returns (SignInResponse);
+  rpc SignIn (SignInRequest) returns (StandardResponse);
 
   // Update doctor profile details
-  rpc UpdateDoctorProfile (UpdateDoctorProfileRequest) returns (UpdateDoctorProfileResponse);
+  rpc UpdateDoctorProfile (UpdateDoctorProfileRequest) returns (StandardResponse);
 
   // Update doctor schedule for one week with 30-minute slots
-  rpc UpdateSchedule (UpdateScheduleRequest) returns (UpdateScheduleResponse);
+  rpc UpdateSchedule (UpdateScheduleRequest) returns (StandardResponse);
 
   // Add a prescription for a patient
-  rpc AddPrescription (AddPrescriptionRequest) returns (AddPrescriptionResponse);
+  rpc AddPrescription (AddPrescriptionRequest) returns (StandardResponse);
 
   // Get past prescriptions for a specific patient
-  rpc GetPastPrescriptions (GetPastPrescriptionsRequest) returns (GetPastPrescriptionsResponse);
+  rpc GetPastPrescriptions (GetPastPrescriptionsRequest) returns (StandardResponse);
 
-  rpc AddDoctor(AddDoctorRequest) returns (DoctorResponse);
+  rpc AddDoctor(AddDoctorRequest) returns (StandardResponse);
 
 }
 
@@ -29,11 +31,6 @@ service DoctorService {
 message SignInRequest {
   string email = 1;
   string password = 2;
-}
-
-message SignInResponse {
-  string token = 1;
-  string message = 2;
 }
 
 
@@ -45,11 +42,6 @@ message AddDoctorRequest {
   string password = 5;
 }
 
-
-message DoctorResponse {
-  string message = 1;
-  string doctor_id = 2;
-}
 // Request and Response messages for UpdateDoctorProfile
 message UpdateDoctorProfileRequest {
   string name = 1;
@@ -60,18 +52,10 @@ message UpdateDoctorProfileRequest {
 
 }
 
-message UpdateDoctorProfileResponse {
-  string message = 1;
-}
-
 // Request and Response messages for UpdateSchedule
 message UpdateScheduleRequest {
   string doctor_id = 1;
   repeated ScheduleEntry schedule_entries = 2; // Week's schedule (each entry is 30-min slots)
-}
-
-message UpdateScheduleResponse {
-  string message = 1;
 }
 
 // Schedule entry for a specific day and time slot
@@ -90,18 +74,10 @@ message AddPrescriptionRequest {
   string prescription_details = 4;
 }
 
-message AddPrescriptionResponse {
-  string message = 1;
-}
-
 // Request and Response messages for GetPastPrescriptions
 message GetPastPrescriptionsRequest {
   string doctor_id = 1;
   string patient_name = 2;
-}
-
-message GetPastPrescriptionsResponse {
-  repeated PrescriptionEntry prescriptions = 1;
 }
 
 // Prescription entry details
@@ -111,3 +87,13 @@ message PrescriptionEntry {
   string prescription_details = 3;
   string issued_date = 4; // Date when prescription was issued
 }
+
+message StandardResponse {
+  string status = 1;
+  int32 status_code = 2; 
+  string message = 3;    
+  string error = 4;    
+  google.protobuf.Any data = 5;  
+}
+
+
