@@ -6,28 +6,28 @@ import "google/protobuf/any.proto";
 
 option go_package = "/proto/doctor";
 
-// The Doctor service definition.
 service DoctorService {
-  // Doctor SignIn
+
   rpc SignIn (SignInRequest) returns (StandardResponse);
 
-  // Update doctor profile details
+
   rpc UpdateDoctorProfile (UpdateDoctorProfileRequest) returns (StandardResponse);
 
-  // Update doctor schedule for one week with 30-minute slots
+
   rpc UpdateSchedule (UpdateScheduleRequest) returns (StandardResponse);
 
-  // Add a prescription for a patient
+
   rpc AddPrescription (AddPrescriptionRequest) returns (StandardResponse);
 
-  // Get past prescriptions for a specific patient
   rpc GetPastPrescriptions (GetPastPrescriptionsRequest) returns (StandardResponse);
 
   rpc AddDoctor(AddDoctorRequest) returns (StandardResponse);
 
+  rpc StoreAccessToken (StoreAccessTokenRequest) returns (StandardResponse);
+  rpc GetAccessToken (GetAccessTokenRequest) returns (StandardResponse);
+
 }
 
-// Request and Response messages for SignIn
 message SignInRequest {
   string email = 1;
   string password = 2;
@@ -42,7 +42,6 @@ message AddDoctorRequest {
   string password = 5;
 }
 
-// Request and Response messages for UpdateDoctorProfile
 message UpdateDoctorProfileRequest {
   string name = 1;
   int32 specializationId = 2;
@@ -52,21 +51,19 @@ message UpdateDoctorProfileRequest {
 
 }
 
-// Request and Response messages for UpdateSchedule
 message UpdateScheduleRequest {
   string doctor_id = 1;
-  repeated ScheduleEntry schedule_entries = 2; // Week's schedule (each entry is 30-min slots)
+  repeated ScheduleEntry schedule_entries = 2; 
 }
 
-// Schedule entry for a specific day and time slot
+
 message ScheduleEntry {
-  string date = 1;       // e.g., "2024-09-18"
-  string start_time = 2;  // e.g., "09:00"
-  string end_time = 3;    // e.g., "09:30"
-  string status = 4;      // "available", "booked", "cancelled"
+  string date = 1;       
+  string start_time = 2;  
+  string end_time = 3;   
+  string status = 4;      
 }
 
-// Request and Response messages for AddPrescription
 message AddPrescriptionRequest {
   string doctor_id = 1;
   string patient_id = 2;
@@ -74,20 +71,27 @@ message AddPrescriptionRequest {
   string prescription_details = 4;
 }
 
-// Request and Response messages for GetPastPrescriptions
 message GetPastPrescriptionsRequest {
   string doctor_id = 1;
   string patient_name = 2;
 }
 
-// Prescription entry details
 message PrescriptionEntry {
   string prescription_id = 1;
   string patient_name = 2;
   string prescription_details = 3;
-  string issued_date = 4; // Date when prescription was issued
+  string issued_date = 4; 
+}
+message StoreAccessTokenRequest {
+  string doctor_id = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+  string expiry = 4; 
 }
 
+message GetAccessTokenRequest {
+  string doctor_id = 1;
+}
 message StandardResponse {
   string status = 1;
   int32 status_code = 2; 

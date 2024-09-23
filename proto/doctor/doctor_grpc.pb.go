@@ -17,17 +17,14 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DoctorServiceClient interface {
-	// Doctor SignIn
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	// Update doctor profile details
 	UpdateDoctorProfile(ctx context.Context, in *UpdateDoctorProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	// Update doctor schedule for one week with 30-minute slots
 	UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	// Add a prescription for a patient
 	AddPrescription(ctx context.Context, in *AddPrescriptionRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	// Get past prescriptions for a specific patient
 	GetPastPrescriptions(ctx context.Context, in *GetPastPrescriptionsRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	StoreAccessToken(ctx context.Context, in *StoreAccessTokenRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	GetAccessToken(ctx context.Context, in *GetAccessTokenRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 }
 
 type doctorServiceClient struct {
@@ -92,21 +89,36 @@ func (c *doctorServiceClient) AddDoctor(ctx context.Context, in *AddDoctorReques
 	return out, nil
 }
 
+func (c *doctorServiceClient) StoreAccessToken(ctx context.Context, in *StoreAccessTokenRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
+	err := c.cc.Invoke(ctx, "/doctor.DoctorService/StoreAccessToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *doctorServiceClient) GetAccessToken(ctx context.Context, in *GetAccessTokenRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
+	err := c.cc.Invoke(ctx, "/doctor.DoctorService/GetAccessToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DoctorServiceServer is the server API for DoctorService service.
 // All implementations must embed UnimplementedDoctorServiceServer
 // for forward compatibility
 type DoctorServiceServer interface {
-	// Doctor SignIn
 	SignIn(context.Context, *SignInRequest) (*StandardResponse, error)
-	// Update doctor profile details
 	UpdateDoctorProfile(context.Context, *UpdateDoctorProfileRequest) (*StandardResponse, error)
-	// Update doctor schedule for one week with 30-minute slots
 	UpdateSchedule(context.Context, *UpdateScheduleRequest) (*StandardResponse, error)
-	// Add a prescription for a patient
 	AddPrescription(context.Context, *AddPrescriptionRequest) (*StandardResponse, error)
-	// Get past prescriptions for a specific patient
 	GetPastPrescriptions(context.Context, *GetPastPrescriptionsRequest) (*StandardResponse, error)
 	AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error)
+	StoreAccessToken(context.Context, *StoreAccessTokenRequest) (*StandardResponse, error)
+	GetAccessToken(context.Context, *GetAccessTokenRequest) (*StandardResponse, error)
 	mustEmbedUnimplementedDoctorServiceServer()
 }
 
@@ -131,6 +143,12 @@ func (UnimplementedDoctorServiceServer) GetPastPrescriptions(context.Context, *G
 }
 func (UnimplementedDoctorServiceServer) AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddDoctor not implemented")
+}
+func (UnimplementedDoctorServiceServer) StoreAccessToken(context.Context, *StoreAccessTokenRequest) (*StandardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreAccessToken not implemented")
+}
+func (UnimplementedDoctorServiceServer) GetAccessToken(context.Context, *GetAccessTokenRequest) (*StandardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccessToken not implemented")
 }
 func (UnimplementedDoctorServiceServer) mustEmbedUnimplementedDoctorServiceServer() {}
 
@@ -253,6 +271,42 @@ func _DoctorService_AddDoctor_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DoctorService_StoreAccessToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreAccessTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DoctorServiceServer).StoreAccessToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/doctor.DoctorService/StoreAccessToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DoctorServiceServer).StoreAccessToken(ctx, req.(*StoreAccessTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DoctorService_GetAccessToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccessTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DoctorServiceServer).GetAccessToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/doctor.DoctorService/GetAccessToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DoctorServiceServer).GetAccessToken(ctx, req.(*GetAccessTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _DoctorService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "doctor.DoctorService",
 	HandlerType: (*DoctorServiceServer)(nil),
@@ -280,6 +334,14 @@ var _DoctorService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddDoctor",
 			Handler:    _DoctorService_AddDoctor_Handler,
+		},
+		{
+			MethodName: "StoreAccessToken",
+			Handler:    _DoctorService_StoreAccessToken_Handler,
+		},
+		{
+			MethodName: "GetAccessToken",
+			Handler:    _DoctorService_GetAccessToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
