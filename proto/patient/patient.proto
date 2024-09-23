@@ -13,9 +13,9 @@ service PatientService {
 
   rpc SignIn (SignInRequest) returns (StandardResponse);
 
-  rpc GetPatientProfile (GetPatientProfileRequest) returns (StandardResponse);
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
 
-  rpc UpdatePatientProfile (UpdatePatientProfileRequest) returns (StandardResponse);
+    rpc UpdateProfile(UpdateProfileRequest) returns (StandardResponse);
 }
 
 
@@ -59,3 +59,37 @@ message StandardResponse {
 }
 
 
+message GetProfileRequest {
+    string email = 1;
+}
+
+message GetProfileResponse {
+    string email = 1;
+    string name = 2;
+    string phone = 3;
+    int32 age = 4;
+    string gender = 5;
+    string status = 6;
+    int32 statusCode = 7;
+    string error = 8;
+}
+
+message UpdateProfileRequest {
+    Patient patient = 1;
+}
+
+message Patient {
+    int32 patientId = 1;
+    string name = 2;
+    string email = 3;
+    string phone = 4;
+    int32 age = 5;
+    string gender = 6;
+}
+
+message ListPatientsResponse {
+    repeated Patient patients = 1;
+    string status = 2;
+    int32 statusCode = 3;
+    string error = 4;
+}

@@ -19,8 +19,8 @@ const _ = grpc.SupportPackageIsVersion7
 type PatientServiceClient interface {
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	GetPatientProfile(ctx context.Context, in *GetPatientProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	UpdatePatientProfile(ctx context.Context, in *UpdatePatientProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error)
+	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 }
 
 type patientServiceClient struct {
@@ -49,18 +49,18 @@ func (c *patientServiceClient) SignIn(ctx context.Context, in *SignInRequest, op
 	return out, nil
 }
 
-func (c *patientServiceClient) GetPatientProfile(ctx context.Context, in *GetPatientProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
-	out := new(StandardResponse)
-	err := c.cc.Invoke(ctx, "/patient.PatientService/GetPatientProfile", in, out, opts...)
+func (c *patientServiceClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error) {
+	out := new(GetProfileResponse)
+	err := c.cc.Invoke(ctx, "/patient.PatientService/GetProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *patientServiceClient) UpdatePatientProfile(ctx context.Context, in *UpdatePatientProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+func (c *patientServiceClient) UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
 	out := new(StandardResponse)
-	err := c.cc.Invoke(ctx, "/patient.PatientService/UpdatePatientProfile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/patient.PatientService/UpdateProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -73,8 +73,8 @@ func (c *patientServiceClient) UpdatePatientProfile(ctx context.Context, in *Upd
 type PatientServiceServer interface {
 	SignUp(context.Context, *SignUpRequest) (*StandardResponse, error)
 	SignIn(context.Context, *SignInRequest) (*StandardResponse, error)
-	GetPatientProfile(context.Context, *GetPatientProfileRequest) (*StandardResponse, error)
-	UpdatePatientProfile(context.Context, *UpdatePatientProfileRequest) (*StandardResponse, error)
+	GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error)
+	UpdateProfile(context.Context, *UpdateProfileRequest) (*StandardResponse, error)
 	mustEmbedUnimplementedPatientServiceServer()
 }
 
@@ -88,11 +88,11 @@ func (UnimplementedPatientServiceServer) SignUp(context.Context, *SignUpRequest)
 func (UnimplementedPatientServiceServer) SignIn(context.Context, *SignInRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
-func (UnimplementedPatientServiceServer) GetPatientProfile(context.Context, *GetPatientProfileRequest) (*StandardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPatientProfile not implemented")
+func (UnimplementedPatientServiceServer) GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProfile not implemented")
 }
-func (UnimplementedPatientServiceServer) UpdatePatientProfile(context.Context, *UpdatePatientProfileRequest) (*StandardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePatientProfile not implemented")
+func (UnimplementedPatientServiceServer) UpdateProfile(context.Context, *UpdateProfileRequest) (*StandardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
 }
 func (UnimplementedPatientServiceServer) mustEmbedUnimplementedPatientServiceServer() {}
 
@@ -143,38 +143,38 @@ func _PatientService_SignIn_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PatientService_GetPatientProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPatientProfileRequest)
+func _PatientService_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PatientServiceServer).GetPatientProfile(ctx, in)
+		return srv.(PatientServiceServer).GetProfile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/patient.PatientService/GetPatientProfile",
+		FullMethod: "/patient.PatientService/GetProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PatientServiceServer).GetPatientProfile(ctx, req.(*GetPatientProfileRequest))
+		return srv.(PatientServiceServer).GetProfile(ctx, req.(*GetProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PatientService_UpdatePatientProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePatientProfileRequest)
+func _PatientService_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PatientServiceServer).UpdatePatientProfile(ctx, in)
+		return srv.(PatientServiceServer).UpdateProfile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/patient.PatientService/UpdatePatientProfile",
+		FullMethod: "/patient.PatientService/UpdateProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PatientServiceServer).UpdatePatientProfile(ctx, req.(*UpdatePatientProfileRequest))
+		return srv.(PatientServiceServer).UpdateProfile(ctx, req.(*UpdateProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -192,12 +192,12 @@ var _PatientService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _PatientService_SignIn_Handler,
 		},
 		{
-			MethodName: "GetPatientProfile",
-			Handler:    _PatientService_GetPatientProfile_Handler,
+			MethodName: "GetProfile",
+			Handler:    _PatientService_GetProfile_Handler,
 		},
 		{
-			MethodName: "UpdatePatientProfile",
-			Handler:    _PatientService_UpdatePatientProfile_Handler,
+			MethodName: "UpdateProfile",
+			Handler:    _PatientService_UpdateProfile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
