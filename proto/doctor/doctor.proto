@@ -100,7 +100,11 @@ message GetProfileResponse{
   int32 status_code = 2; 
   string message = 3;    
   string error = 4;    
-  Doctor doctor = 5;
+  string DoctorId = 5;
+  string name = 6;
+  string email = 7;
+  int32 specializationId = 8;
+  int32 phone = 9;
 }
 
 

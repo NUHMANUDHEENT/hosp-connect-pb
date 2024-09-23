@@ -727,11 +727,15 @@ type GetProfileResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Status     string  `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
-	StatusCode int32   `protobuf:"varint,2,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message    string  `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
-	Error      string  `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
-	Doctor     *Doctor `protobuf:"bytes,5,opt,name=doctor,proto3" json:"doctor,omitempty"`
+	Status           string `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	StatusCode       int32  `protobuf:"varint,2,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
+	Message          string `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	Error            string `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+	DoctorId         string `protobuf:"bytes,5,opt,name=DoctorId,proto3" json:"DoctorId,omitempty"`
+	Name             string `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
+	Email            string `protobuf:"bytes,7,opt,name=email,proto3" json:"email,omitempty"`
+	SpecializationId int32  `protobuf:"varint,8,opt,name=specializationId,proto3" json:"specializationId,omitempty"`
+	Phone            int32  `protobuf:"varint,9,opt,name=phone,proto3" json:"phone,omitempty"`
 }
 
 func (x *GetProfileResponse) Reset() {
@@ -794,11 +798,39 @@ func (x *GetProfileResponse) GetError() string {
 	return ""
 }
 
-func (x *GetProfileResponse) GetDoctor() *Doctor {
+func (x *GetProfileResponse) GetDoctorId() string {
 	if x != nil {
-		return x.Doctor
+		return x.DoctorId
 	}
-	return nil
+	return ""
+}
+
+func (x *GetProfileResponse) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *GetProfileResponse) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *GetProfileResponse) GetSpecializationId() int32 {
+	if x != nil {
+		return x.SpecializationId
+	}
+	return 0
+}
+
+func (x *GetProfileResponse) GetPhone() int32 {
+	if x != nil {
+		return x.Phone
+	}
+	return 0
 }
 
 type UpdateProfileRequest struct {
@@ -1095,7 +1127,7 @@ var file_doctor_doctor_proto_rawDesc = []byte{
 	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x49, 0x64, 0x22,
 	0x29, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x71,
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x22, 0xa5, 0x01, 0x0a, 0x12, 0x47,
+	0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x22, 0x85, 0x02, 0x0a, 0x12, 0x47,
 	0x65, 0x74, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x1f, 0x0a, 0x0b, 0x73, 0x74, 0x61,
@@ -1103,10 +1135,16 @@ var file_doctor_doctor_proto_rawDesc = []byte{
 	0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65,
 	0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73,
 	0x73, 0x61, 0x67, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x26, 0x0a, 0x06, 0x64, 0x6f,
-	0x63, 0x74, 0x6f, 0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x64, 0x6f, 0x63,
-	0x74, 0x6f, 0x72, 0x2e, 0x44, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x52, 0x06, 0x64, 0x6f, 0x63, 0x74,
-	0x6f, 0x72, 0x22, 0x3e, 0x0a, 0x14, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x66,
+	0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x6f,
+	0x63, 0x74, 0x6f, 0x72, 0x49, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x6f,
+	0x63, 0x74, 0x6f, 0x72, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d,
+	0x61, 0x69, 0x6c, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c,
+	0x12, 0x2a, 0x0a, 0x10, 0x73, 0x70, 0x65, 0x63, 0x69, 0x61, 0x6c, 0x69, 0x7a, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x49, 0x64, 0x18, 0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x10, 0x73, 0x70, 0x65, 0x63,
+	0x69, 0x61, 0x6c, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05,
+	0x70, 0x68, 0x6f, 0x6e, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x70, 0x68, 0x6f,
+	0x6e, 0x65, 0x22, 0x3e, 0x0a, 0x14, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x66,
 	0x69, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x26, 0x0a, 0x06, 0x64, 0x6f,
 	0x63, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x64, 0x6f, 0x63,
 	0x74, 0x6f, 0x72, 0x2e, 0x44, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x52, 0x06, 0x64, 0x6f, 0x63, 0x74,
@@ -1209,32 +1247,31 @@ var file_doctor_doctor_proto_goTypes = []interface{}{
 }
 var file_doctor_doctor_proto_depIdxs = []int32{
 	4,  // 0: doctor.UpdateScheduleRequest.schedule_entries:type_name -> doctor.ScheduleEntry
-	13, // 1: doctor.GetProfileResponse.doctor:type_name -> doctor.Doctor
-	13, // 2: doctor.UpdateProfileRequest.doctor:type_name -> doctor.Doctor
-	15, // 3: doctor.StandardResponse.data:type_name -> google.protobuf.Any
-	0,  // 4: doctor.DoctorService.SignIn:input_type -> doctor.SignInRequest
-	10, // 5: doctor.DoctorService.GetProfile:input_type -> doctor.GetProfileRequest
-	12, // 6: doctor.DoctorService.UpdateProfile:input_type -> doctor.UpdateProfileRequest
-	3,  // 7: doctor.DoctorService.UpdateSchedule:input_type -> doctor.UpdateScheduleRequest
-	5,  // 8: doctor.DoctorService.AddPrescription:input_type -> doctor.AddPrescriptionRequest
-	6,  // 9: doctor.DoctorService.GetPastPrescriptions:input_type -> doctor.GetPastPrescriptionsRequest
-	1,  // 10: doctor.DoctorService.AddDoctor:input_type -> doctor.AddDoctorRequest
-	8,  // 11: doctor.DoctorService.StoreAccessToken:input_type -> doctor.StoreAccessTokenRequest
-	9,  // 12: doctor.DoctorService.GetAccessToken:input_type -> doctor.GetAccessTokenRequest
-	14, // 13: doctor.DoctorService.SignIn:output_type -> doctor.StandardResponse
-	11, // 14: doctor.DoctorService.GetProfile:output_type -> doctor.GetProfileResponse
-	14, // 15: doctor.DoctorService.UpdateProfile:output_type -> doctor.StandardResponse
-	14, // 16: doctor.DoctorService.UpdateSchedule:output_type -> doctor.StandardResponse
-	14, // 17: doctor.DoctorService.AddPrescription:output_type -> doctor.StandardResponse
-	14, // 18: doctor.DoctorService.GetPastPrescriptions:output_type -> doctor.StandardResponse
-	14, // 19: doctor.DoctorService.AddDoctor:output_type -> doctor.StandardResponse
-	14, // 20: doctor.DoctorService.StoreAccessToken:output_type -> doctor.StandardResponse
-	14, // 21: doctor.DoctorService.GetAccessToken:output_type -> doctor.StandardResponse
-	13, // [13:22] is the sub-list for method output_type
-	4,  // [4:13] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	13, // 1: doctor.UpdateProfileRequest.doctor:type_name -> doctor.Doctor
+	15, // 2: doctor.StandardResponse.data:type_name -> google.protobuf.Any
+	0,  // 3: doctor.DoctorService.SignIn:input_type -> doctor.SignInRequest
+	10, // 4: doctor.DoctorService.GetProfile:input_type -> doctor.GetProfileRequest
+	12, // 5: doctor.DoctorService.UpdateProfile:input_type -> doctor.UpdateProfileRequest
+	3,  // 6: doctor.DoctorService.UpdateSchedule:input_type -> doctor.UpdateScheduleRequest
+	5,  // 7: doctor.DoctorService.AddPrescription:input_type -> doctor.AddPrescriptionRequest
+	6,  // 8: doctor.DoctorService.GetPastPrescriptions:input_type -> doctor.GetPastPrescriptionsRequest
+	1,  // 9: doctor.DoctorService.AddDoctor:input_type -> doctor.AddDoctorRequest
+	8,  // 10: doctor.DoctorService.StoreAccessToken:input_type -> doctor.StoreAccessTokenRequest
+	9,  // 11: doctor.DoctorService.GetAccessToken:input_type -> doctor.GetAccessTokenRequest
+	14, // 12: doctor.DoctorService.SignIn:output_type -> doctor.StandardResponse
+	11, // 13: doctor.DoctorService.GetProfile:output_type -> doctor.GetProfileResponse
+	14, // 14: doctor.DoctorService.UpdateProfile:output_type -> doctor.StandardResponse
+	14, // 15: doctor.DoctorService.UpdateSchedule:output_type -> doctor.StandardResponse
+	14, // 16: doctor.DoctorService.AddPrescription:output_type -> doctor.StandardResponse
+	14, // 17: doctor.DoctorService.GetPastPrescriptions:output_type -> doctor.StandardResponse
+	14, // 18: doctor.DoctorService.AddDoctor:output_type -> doctor.StandardResponse
+	14, // 19: doctor.DoctorService.StoreAccessToken:output_type -> doctor.StandardResponse
+	14, // 20: doctor.DoctorService.GetAccessToken:output_type -> doctor.StandardResponse
+	12, // [12:21] is the sub-list for method output_type
+	3,  // [3:12] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_doctor_doctor_proto_init() }
