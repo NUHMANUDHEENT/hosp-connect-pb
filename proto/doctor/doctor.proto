@@ -104,7 +104,7 @@ message Doctor {
   string DoctorId = 1;
   string name = 2;
   string email = 3;
-  string specialization = 4;
+  int32 specializationId = 4;
   string phoneNumber = 5;
 }
 message StandardResponse {
