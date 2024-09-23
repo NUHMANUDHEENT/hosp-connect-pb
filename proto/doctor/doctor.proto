@@ -113,7 +113,7 @@ message Doctor {
   string name = 2;
   string email = 3;
   int32 specializationId = 4;
-  string phoneNumber = 5;
+  int32 phone = 5;
 }
 message StandardResponse {
   string status = 1;
