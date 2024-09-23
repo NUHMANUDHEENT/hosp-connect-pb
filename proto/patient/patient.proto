@@ -66,7 +66,7 @@ message GetProfileRequest {
 message GetProfileResponse {
     string email = 1;
     string name = 2;
-    string phone = 3;
+    int32 phone = 3;
     int32 age = 4;
     string gender = 5;
     string status = 6;
@@ -82,7 +82,7 @@ message Patient {
     int32 patientId = 1;
     string name = 2;
     string email = 3;
-    string phone = 4;
+    int32 phone = 4;
     int32 age = 5;
     string gender = 6;
 }
