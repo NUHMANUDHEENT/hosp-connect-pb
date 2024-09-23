@@ -10,7 +10,7 @@ service DoctorService {
 
   rpc SignIn (SignInRequest) returns (StandardResponse);
 
-  rpc GetProfile (GetProfileRequest) returns (StandardResponse);
+  rpc GetProfile (GetProfileRequest) returns (GetProfileResponse);
 
   rpc UpdateProfile (UpdateProfileRequest) returns (StandardResponse);
 
@@ -95,6 +95,14 @@ message GetAccessTokenRequest {
 message GetProfileRequest {
   string email = 1;
 }
+message GetProfileResponse{
+  string status = 1;
+  int32 status_code = 2; 
+  string message = 3;    
+  string error = 4;    
+  Doctor doctor = 5;
+}
+
 
 message UpdateProfileRequest {
   Doctor doctor = 1;

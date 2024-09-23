@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DoctorServiceClient interface {
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error)
 	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	AddPrescription(ctx context.Context, in *AddPrescriptionRequest, opts ...grpc.CallOption) (*StandardResponse, error)
@@ -45,8 +45,8 @@ func (c *doctorServiceClient) SignIn(ctx context.Context, in *SignInRequest, opt
 	return out, nil
 }
 
-func (c *doctorServiceClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
-	out := new(StandardResponse)
+func (c *doctorServiceClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error) {
+	out := new(GetProfileResponse)
 	err := c.cc.Invoke(ctx, "/doctor.DoctorService/GetProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -122,7 +122,7 @@ func (c *doctorServiceClient) GetAccessToken(ctx context.Context, in *GetAccessT
 // for forward compatibility
 type DoctorServiceServer interface {
 	SignIn(context.Context, *SignInRequest) (*StandardResponse, error)
-	GetProfile(context.Context, *GetProfileRequest) (*StandardResponse, error)
+	GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error)
 	UpdateProfile(context.Context, *UpdateProfileRequest) (*StandardResponse, error)
 	UpdateSchedule(context.Context, *UpdateScheduleRequest) (*StandardResponse, error)
 	AddPrescription(context.Context, *AddPrescriptionRequest) (*StandardResponse, error)
@@ -140,7 +140,7 @@ type UnimplementedDoctorServiceServer struct {
 func (UnimplementedDoctorServiceServer) SignIn(context.Context, *SignInRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
-func (UnimplementedDoctorServiceServer) GetProfile(context.Context, *GetProfileRequest) (*StandardResponse, error) {
+func (UnimplementedDoctorServiceServer) GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProfile not implemented")
 }
 func (UnimplementedDoctorServiceServer) UpdateProfile(context.Context, *UpdateProfileRequest) (*StandardResponse, error) {
