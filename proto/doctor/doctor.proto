@@ -10,12 +10,11 @@ service DoctorService {
 
   rpc SignIn (SignInRequest) returns (StandardResponse);
 
+  rpc GetProfile (GetProfileRequest) returns (StandardResponse);
 
-  rpc UpdateDoctorProfile (UpdateDoctorProfileRequest) returns (StandardResponse);
-
+  rpc UpdateProfile (UpdateProfileRequest) returns (StandardResponse);
 
   rpc UpdateSchedule (UpdateScheduleRequest) returns (StandardResponse);
-
 
   rpc AddPrescription (AddPrescriptionRequest) returns (StandardResponse);
 
@@ -24,6 +23,7 @@ service DoctorService {
   rpc AddDoctor(AddDoctorRequest) returns (StandardResponse);
 
   rpc StoreAccessToken (StoreAccessTokenRequest) returns (StandardResponse);
+
   rpc GetAccessToken (GetAccessTokenRequest) returns (StandardResponse);
 
 }
@@ -91,6 +91,21 @@ message StoreAccessTokenRequest {
 
 message GetAccessTokenRequest {
   string doctor_id = 1;
+}
+message GetProfileRequest {
+  string email = 1;
+}
+
+message UpdateProfileRequest {
+  Doctor doctor = 1;
+}
+
+message Doctor {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string specialization = 4;
+  string phoneNumber = 5;
 }
 message StandardResponse {
   string status = 1;

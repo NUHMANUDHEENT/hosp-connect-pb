@@ -18,7 +18,8 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DoctorServiceClient interface {
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	UpdateDoctorProfile(ctx context.Context, in *UpdateDoctorProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	AddPrescription(ctx context.Context, in *AddPrescriptionRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	GetPastPrescriptions(ctx context.Context, in *GetPastPrescriptionsRequest, opts ...grpc.CallOption) (*StandardResponse, error)
@@ -44,9 +45,18 @@ func (c *doctorServiceClient) SignIn(ctx context.Context, in *SignInRequest, opt
 	return out, nil
 }
 
-func (c *doctorServiceClient) UpdateDoctorProfile(ctx context.Context, in *UpdateDoctorProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+func (c *doctorServiceClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
 	out := new(StandardResponse)
-	err := c.cc.Invoke(ctx, "/doctor.DoctorService/UpdateDoctorProfile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/doctor.DoctorService/GetProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *doctorServiceClient) UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
+	err := c.cc.Invoke(ctx, "/doctor.DoctorService/UpdateProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +122,8 @@ func (c *doctorServiceClient) GetAccessToken(ctx context.Context, in *GetAccessT
 // for forward compatibility
 type DoctorServiceServer interface {
 	SignIn(context.Context, *SignInRequest) (*StandardResponse, error)
-	UpdateDoctorProfile(context.Context, *UpdateDoctorProfileRequest) (*StandardResponse, error)
+	GetProfile(context.Context, *GetProfileRequest) (*StandardResponse, error)
+	UpdateProfile(context.Context, *UpdateProfileRequest) (*StandardResponse, error)
 	UpdateSchedule(context.Context, *UpdateScheduleRequest) (*StandardResponse, error)
 	AddPrescription(context.Context, *AddPrescriptionRequest) (*StandardResponse, error)
 	GetPastPrescriptions(context.Context, *GetPastPrescriptionsRequest) (*StandardResponse, error)
@@ -129,8 +140,11 @@ type UnimplementedDoctorServiceServer struct {
 func (UnimplementedDoctorServiceServer) SignIn(context.Context, *SignInRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
-func (UnimplementedDoctorServiceServer) UpdateDoctorProfile(context.Context, *UpdateDoctorProfileRequest) (*StandardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateDoctorProfile not implemented")
+func (UnimplementedDoctorServiceServer) GetProfile(context.Context, *GetProfileRequest) (*StandardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProfile not implemented")
+}
+func (UnimplementedDoctorServiceServer) UpdateProfile(context.Context, *UpdateProfileRequest) (*StandardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
 }
 func (UnimplementedDoctorServiceServer) UpdateSchedule(context.Context, *UpdateScheduleRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSchedule not implemented")
@@ -181,20 +195,38 @@ func _DoctorService_SignIn_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DoctorService_UpdateDoctorProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateDoctorProfileRequest)
+func _DoctorService_GetProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProfileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DoctorServiceServer).UpdateDoctorProfile(ctx, in)
+		return srv.(DoctorServiceServer).GetProfile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/doctor.DoctorService/UpdateDoctorProfile",
+		FullMethod: "/doctor.DoctorService/GetProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorServiceServer).UpdateDoctorProfile(ctx, req.(*UpdateDoctorProfileRequest))
+		return srv.(DoctorServiceServer).GetProfile(ctx, req.(*GetProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DoctorService_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DoctorServiceServer).UpdateProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/doctor.DoctorService/UpdateProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DoctorServiceServer).UpdateProfile(ctx, req.(*UpdateProfileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -316,8 +348,12 @@ var _DoctorService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _DoctorService_SignIn_Handler,
 		},
 		{
-			MethodName: "UpdateDoctorProfile",
-			Handler:    _DoctorService_UpdateDoctorProfile_Handler,
+			MethodName: "GetProfile",
+			Handler:    _DoctorService_GetProfile_Handler,
+		},
+		{
+			MethodName: "UpdateProfile",
+			Handler:    _DoctorService_UpdateProfile_Handler,
 		},
 		{
 			MethodName: "UpdateSchedule",
