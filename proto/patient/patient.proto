@@ -60,7 +60,7 @@ message StandardResponse {
 
 
 message GetProfileRequest {
-    string patientId = 1;
+    string email = 1;
 }
 
 message GetProfileResponse {
