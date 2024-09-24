@@ -27,6 +27,8 @@ type AdminServiceClient interface {
 	AddPatient(ctx context.Context, in *AddPatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	DeletePatient(ctx context.Context, in *DeletePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	BlockPatient(ctx context.Context, in *BlockPatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	ListDoctors(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListDoctorsResponse, error)
+	ListPatients(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListPatientsResponse, error)
 }
 
 type adminServiceClient struct {
@@ -100,6 +102,24 @@ func (c *adminServiceClient) BlockPatient(ctx context.Context, in *BlockPatientR
 	return out, nil
 }
 
+func (c *adminServiceClient) ListDoctors(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListDoctorsResponse, error) {
+	out := new(ListDoctorsResponse)
+	err := c.cc.Invoke(ctx, "/admin.AdminService/ListDoctors", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminServiceClient) ListPatients(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListPatientsResponse, error) {
+	out := new(ListPatientsResponse)
+	err := c.cc.Invoke(ctx, "/admin.AdminService/ListPatients", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServiceServer is the server API for AdminService service.
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility
@@ -114,6 +134,8 @@ type AdminServiceServer interface {
 	AddPatient(context.Context, *AddPatientRequest) (*StandardResponse, error)
 	DeletePatient(context.Context, *DeletePatientRequest) (*StandardResponse, error)
 	BlockPatient(context.Context, *BlockPatientRequest) (*StandardResponse, error)
+	ListDoctors(context.Context, *Empty) (*ListDoctorsResponse, error)
+	ListPatients(context.Context, *Empty) (*ListPatientsResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -141,6 +163,12 @@ func (UnimplementedAdminServiceServer) DeletePatient(context.Context, *DeletePat
 }
 func (UnimplementedAdminServiceServer) BlockPatient(context.Context, *BlockPatientRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BlockPatient not implemented")
+}
+func (UnimplementedAdminServiceServer) ListDoctors(context.Context, *Empty) (*ListDoctorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDoctors not implemented")
+}
+func (UnimplementedAdminServiceServer) ListPatients(context.Context, *Empty) (*ListPatientsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPatients not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 
@@ -281,6 +309,42 @@ func _AdminService_BlockPatient_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminService_ListDoctors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).ListDoctors(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.AdminService/ListDoctors",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).ListDoctors(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminService_ListPatients_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).ListPatients(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.AdminService/ListPatients",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).ListPatients(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _AdminService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "admin.AdminService",
 	HandlerType: (*AdminServiceServer)(nil),
@@ -312,6 +376,14 @@ var _AdminService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BlockPatient",
 			Handler:    _AdminService_BlockPatient_Handler,
+		},
+		{
+			MethodName: "ListDoctors",
+			Handler:    _AdminService_ListDoctors_Handler,
+		},
+		{
+			MethodName: "ListPatients",
+			Handler:    _AdminService_ListPatients_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
