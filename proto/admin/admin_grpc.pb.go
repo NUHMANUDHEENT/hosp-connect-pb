@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdminServiceClient interface {
 	// SignIn method for admin users
-	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
 	// AddDoctor method for adding a new doctor
 	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	// UpdateDoctor method for updating doctor details
@@ -39,8 +39,8 @@ func NewAdminServiceClient(cc grpc.ClientConnInterface) AdminServiceClient {
 	return &adminServiceClient{cc}
 }
 
-func (c *adminServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
-	out := new(StandardResponse)
+func (c *adminServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
+	out := new(SignInResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/SignIn", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -125,7 +125,7 @@ func (c *adminServiceClient) ListPatients(ctx context.Context, in *Empty, opts .
 // for forward compatibility
 type AdminServiceServer interface {
 	// SignIn method for admin users
-	SignIn(context.Context, *SignInRequest) (*StandardResponse, error)
+	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
 	// AddDoctor method for adding a new doctor
 	AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error)
 	// UpdateDoctor method for updating doctor details
@@ -143,7 +143,7 @@ type AdminServiceServer interface {
 type UnimplementedAdminServiceServer struct {
 }
 
-func (UnimplementedAdminServiceServer) SignIn(context.Context, *SignInRequest) (*StandardResponse, error) {
+func (UnimplementedAdminServiceServer) SignIn(context.Context, *SignInRequest) (*SignInResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
 func (UnimplementedAdminServiceServer) AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error) {

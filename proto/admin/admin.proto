@@ -4,13 +4,13 @@ package admin;
 
 import "google/protobuf/any.proto";
 
-option go_package = "/proto/admin";
+option go_package = "/admin";
 
 // AdminService defines the gRPC service for admin-related functionalities
 service AdminService {
   
   // SignIn method for admin users
-  rpc SignIn(SignInRequest) returns (StandardResponse);
+  rpc SignIn(SignInRequest) returns (SignInResponse);
   
   // AddDoctor method for adding a new doctor
   rpc AddDoctor(AddDoctorRequest) returns (StandardResponse);
@@ -33,7 +33,12 @@ message SignInRequest {
   string email = 1;
   string password = 2;
 }
-
+message SignInResponse{
+  string status = 1;
+  int32 status_code = 2; 
+  string message = 3;
+  string adminId = 4;
+}
 message AddDoctorRequest {
   string name = 1;
   int32 specializationId = 2;

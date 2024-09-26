@@ -4,12 +4,12 @@ package patient;
 
 import "google/protobuf/any.proto";
 
-option go_package = "/proto/patient";
+option go_package = "/patient";
 
 // The Patient service definition.
 service PatientService {
 
-  rpc SignUp (SignUpRequest) returns (StandardResponse);
+  rpc SignUp (SignUpRequest) returns (SignInResponse);
 
   rpc SignIn (SignInRequest) returns (StandardResponse);
 
@@ -32,6 +32,12 @@ message SignUpRequest {
 message SignInRequest {
   string email = 1;
   string password = 2;
+}
+message SignInResponse{
+  string status = 1;
+  int32 status_code = 2; 
+  string message = 3;
+  string doctorId = 4;
 }
 
 

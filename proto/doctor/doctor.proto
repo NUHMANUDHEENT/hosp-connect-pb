@@ -8,7 +8,7 @@ option go_package = "/proto/doctor";
 
 service DoctorService {
 
-  rpc SignIn (SignInRequest) returns (StandardResponse);
+  rpc SignIn (SignInRequest) returns (SignInResponse);
 
   rpc GetProfile (GetProfileRequest) returns (GetProfileResponse);
 
@@ -33,7 +33,12 @@ message SignInRequest {
   string email = 1;
   string password = 2;
 }
-
+message SignInResponse{
+  string status = 1;
+  int32 status_code = 2; 
+  string message = 3;
+  string doctorId = 4;
+}
 
 message AddDoctorRequest {
   string name = 1;
