@@ -26,6 +26,7 @@ service DoctorService {
 
   rpc GetAccessToken (GetAccessTokenRequest) returns (StandardResponse);
 
+  rpc ConfirmSchedule(ConfirmScheduleRequest) returns (ConfirmScheduleResponse);
 }
 
 message SignInRequest {
@@ -118,6 +119,24 @@ message Doctor {
   string email = 3;
   int32 specializationId = 4;
   int32 phone = 5;
+}
+
+message ConfirmScheduleRequest {
+  string doctor_id = 1;
+}
+
+message ConfirmScheduleResponse {
+  string status = 1;
+  int32 status_code = 2;
+  string error = 3;
+  repeated Schedule schedules = 4;
+}
+
+message Schedule {
+  string event_id = 1;
+  string summary = 2;
+  string start_time = 3;
+  string end_time = 4;
 }
 message StandardResponse {
   string status = 1;
