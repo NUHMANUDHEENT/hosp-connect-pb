@@ -40,11 +40,12 @@ message SignInResponse{
   string adminId = 4;
 }
 message AddDoctorRequest {
-  string name = 1;
-  int32 specializationId = 2;
-  int32 phone = 3;
-  string email = 4;
-  string password = 5;
+  string doctorId = 1;
+  string name = 2;
+  int32 specializationId = 3;
+  int32 phone = 4;
+  string email = 5;
+  string password = 6;
 }
 
 message UpdateDoctorRequest {

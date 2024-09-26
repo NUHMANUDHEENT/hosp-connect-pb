@@ -37,17 +37,16 @@ message SignInResponse{
   string status = 1;
   int32 status_code = 2; 
   string message = 3;
-  string doctorId = 4;
+  string patientId = 4;
 }
 
 
 message GetPatientProfileRequest {
-  string patient_id = 1;
+  string patientId = 1;
 }
 
 
 message UpdatePatientProfileRequest {
-  string patient_id = 1;
   string name = 2;
   string email = 3;
   int32 phone = 4;
@@ -66,7 +65,7 @@ message StandardResponse {
 
 
 message GetProfileRequest {
-    string email = 1;
+    string patientId = 1;
 }
 
 message GetProfileResponse {

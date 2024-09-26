@@ -4,7 +4,7 @@ package doctor;
 
 import "google/protobuf/any.proto";
 
-option go_package = "/proto/doctor";
+option go_package = "/doctor";
 
 service DoctorService {
 
@@ -99,7 +99,7 @@ message GetAccessTokenRequest {
   string doctor_id = 1;
 }
 message GetProfileRequest {
-  string email = 1;
+  string doctor_id = 1;
 }
 message GetProfileResponse{
   string status = 1;
