@@ -17,8 +17,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PatientServiceClient interface {
-	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignInResponse, error)
-	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
 	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error)
 	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 }
@@ -31,8 +31,8 @@ func NewPatientServiceClient(cc grpc.ClientConnInterface) PatientServiceClient {
 	return &patientServiceClient{cc}
 }
 
-func (c *patientServiceClient) SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
-	out := new(SignInResponse)
+func (c *patientServiceClient) SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/patient.PatientService/SignUp", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -40,8 +40,8 @@ func (c *patientServiceClient) SignUp(ctx context.Context, in *SignUpRequest, op
 	return out, nil
 }
 
-func (c *patientServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
-	out := new(StandardResponse)
+func (c *patientServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
+	out := new(SignInResponse)
 	err := c.cc.Invoke(ctx, "/patient.PatientService/SignIn", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -71,8 +71,8 @@ func (c *patientServiceClient) UpdateProfile(ctx context.Context, in *UpdateProf
 // All implementations must embed UnimplementedPatientServiceServer
 // for forward compatibility
 type PatientServiceServer interface {
-	SignUp(context.Context, *SignUpRequest) (*SignInResponse, error)
-	SignIn(context.Context, *SignInRequest) (*StandardResponse, error)
+	SignUp(context.Context, *SignUpRequest) (*StandardResponse, error)
+	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
 	GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error)
 	UpdateProfile(context.Context, *UpdateProfileRequest) (*StandardResponse, error)
 	mustEmbedUnimplementedPatientServiceServer()
@@ -82,10 +82,10 @@ type PatientServiceServer interface {
 type UnimplementedPatientServiceServer struct {
 }
 
-func (UnimplementedPatientServiceServer) SignUp(context.Context, *SignUpRequest) (*SignInResponse, error) {
+func (UnimplementedPatientServiceServer) SignUp(context.Context, *SignUpRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
 }
-func (UnimplementedPatientServiceServer) SignIn(context.Context, *SignInRequest) (*StandardResponse, error) {
+func (UnimplementedPatientServiceServer) SignIn(context.Context, *SignInRequest) (*SignInResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
 func (UnimplementedPatientServiceServer) GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error) {

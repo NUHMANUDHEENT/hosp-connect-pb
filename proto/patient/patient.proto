@@ -9,9 +9,9 @@ option go_package = "/patient";
 // The Patient service definition.
 service PatientService {
 
-  rpc SignUp (SignUpRequest) returns (SignInResponse);
+  rpc SignUp (SignUpRequest) returns (StandardResponse);
 
-  rpc SignIn (SignInRequest) returns (StandardResponse);
+  rpc SignIn (SignInRequest) returns (SignInResponse);
 
   rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
 
