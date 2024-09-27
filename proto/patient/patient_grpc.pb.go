@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PatientServiceClient interface {
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	SignUpVerify(ctx context.Context, in *SignUpVerifyRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
 	GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*GetProfileResponse, error)
 	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
@@ -34,6 +35,15 @@ func NewPatientServiceClient(cc grpc.ClientConnInterface) PatientServiceClient {
 func (c *patientServiceClient) SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
 	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/patient.PatientService/SignUp", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *patientServiceClient) SignUpVerify(ctx context.Context, in *SignUpVerifyRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
+	err := c.cc.Invoke(ctx, "/patient.PatientService/SignUpVerify", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,6 +82,7 @@ func (c *patientServiceClient) UpdateProfile(ctx context.Context, in *UpdateProf
 // for forward compatibility
 type PatientServiceServer interface {
 	SignUp(context.Context, *SignUpRequest) (*StandardResponse, error)
+	SignUpVerify(context.Context, *SignUpVerifyRequest) (*StandardResponse, error)
 	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
 	GetProfile(context.Context, *GetProfileRequest) (*GetProfileResponse, error)
 	UpdateProfile(context.Context, *UpdateProfileRequest) (*StandardResponse, error)
@@ -84,6 +95,9 @@ type UnimplementedPatientServiceServer struct {
 
 func (UnimplementedPatientServiceServer) SignUp(context.Context, *SignUpRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
+}
+func (UnimplementedPatientServiceServer) SignUpVerify(context.Context, *SignUpVerifyRequest) (*StandardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignUpVerify not implemented")
 }
 func (UnimplementedPatientServiceServer) SignIn(context.Context, *SignInRequest) (*SignInResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
@@ -121,6 +135,24 @@ func _PatientService_SignUp_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PatientServiceServer).SignUp(ctx, req.(*SignUpRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PatientService_SignUpVerify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignUpVerifyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PatientServiceServer).SignUpVerify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/patient.PatientService/SignUpVerify",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PatientServiceServer).SignUpVerify(ctx, req.(*SignUpVerifyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -186,6 +218,10 @@ var _PatientService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SignUp",
 			Handler:    _PatientService_SignUp_Handler,
+		},
+		{
+			MethodName: "SignUpVerify",
+			Handler:    _PatientService_SignUpVerify_Handler,
 		},
 		{
 			MethodName: "SignIn",

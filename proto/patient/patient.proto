@@ -11,11 +11,13 @@ service PatientService {
 
   rpc SignUp (SignUpRequest) returns (StandardResponse);
 
+  rpc SignUpVerify (SignUpVerifyRequest) returns (StandardResponse);
+
   rpc SignIn (SignInRequest) returns (SignInResponse);
 
   rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
 
-    rpc UpdateProfile(UpdateProfileRequest) returns (StandardResponse);
+   rpc UpdateProfile(UpdateProfileRequest) returns (StandardResponse);
 }
 
 
@@ -28,6 +30,9 @@ message SignUpRequest {
   string gender = 6;
 }
 
+message SignUpVerifyRequest{
+  string token = 1;
+}
 
 message SignInRequest {
   string email = 1;
