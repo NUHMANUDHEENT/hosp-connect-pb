@@ -89,7 +89,7 @@ message PrescriptionEntry {
   string issued_date = 4; 
 }
 message StoreAccessTokenRequest {
-  string doctor_id = 1;
+  string email = 1;
   string access_token = 2;
   string refresh_token = 3;
   string expiry = 4; 
