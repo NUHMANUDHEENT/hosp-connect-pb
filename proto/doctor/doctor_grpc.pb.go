@@ -27,6 +27,7 @@ type DoctorServiceClient interface {
 	StoreAccessToken(ctx context.Context, in *StoreAccessTokenRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	GetAccessToken(ctx context.Context, in *GetAccessTokenRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	ConfirmSchedule(ctx context.Context, in *ConfirmScheduleRequest, opts ...grpc.CallOption) (*ConfirmScheduleResponse, error)
+	GetAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityResponse, error)
 }
 
 type doctorServiceClient struct {
@@ -127,6 +128,15 @@ func (c *doctorServiceClient) ConfirmSchedule(ctx context.Context, in *ConfirmSc
 	return out, nil
 }
 
+func (c *doctorServiceClient) GetAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityResponse, error) {
+	out := new(GetAvailabilityResponse)
+	err := c.cc.Invoke(ctx, "/doctor.DoctorService/GetAvailability", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DoctorServiceServer is the server API for DoctorService service.
 // All implementations must embed UnimplementedDoctorServiceServer
 // for forward compatibility
@@ -141,6 +151,7 @@ type DoctorServiceServer interface {
 	StoreAccessToken(context.Context, *StoreAccessTokenRequest) (*StandardResponse, error)
 	GetAccessToken(context.Context, *GetAccessTokenRequest) (*StandardResponse, error)
 	ConfirmSchedule(context.Context, *ConfirmScheduleRequest) (*ConfirmScheduleResponse, error)
+	GetAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityResponse, error)
 	mustEmbedUnimplementedDoctorServiceServer()
 }
 
@@ -177,6 +188,9 @@ func (UnimplementedDoctorServiceServer) GetAccessToken(context.Context, *GetAcce
 }
 func (UnimplementedDoctorServiceServer) ConfirmSchedule(context.Context, *ConfirmScheduleRequest) (*ConfirmScheduleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConfirmSchedule not implemented")
+}
+func (UnimplementedDoctorServiceServer) GetAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAvailability not implemented")
 }
 func (UnimplementedDoctorServiceServer) mustEmbedUnimplementedDoctorServiceServer() {}
 
@@ -371,6 +385,24 @@ func _DoctorService_ConfirmSchedule_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DoctorService_GetAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAvailabilityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DoctorServiceServer).GetAvailability(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/doctor.DoctorService/GetAvailability",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DoctorServiceServer).GetAvailability(ctx, req.(*GetAvailabilityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _DoctorService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "doctor.DoctorService",
 	HandlerType: (*DoctorServiceServer)(nil),
@@ -414,6 +446,10 @@ var _DoctorService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ConfirmSchedule",
 			Handler:    _DoctorService_ConfirmSchedule_Handler,
+		},
+		{
+			MethodName: "GetAvailability",
+			Handler:    _DoctorService_GetAvailability_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
