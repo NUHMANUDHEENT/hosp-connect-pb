@@ -143,6 +143,7 @@ message Schedule {
   string start_time = 3;
   string end_time = 4;
 }
+
 message StandardResponse {
   string status = 1;
   int32 status_code = 2; 
