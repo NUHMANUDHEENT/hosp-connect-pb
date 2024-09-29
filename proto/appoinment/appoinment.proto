@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package appointment;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/appoinment";
+
+// Service Definition
+service AppointmentService {
+    // Check available doctors and their next available time slot
+    rpc CheckAvailability(CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
+
+    // Confirm an appointment for a specific doctor and time
+    rpc ConfirmAppointment(ConfirmAppointmentRequest) returns (ConfirmAppointmentResponse);
+
+    // Complete payment for an appointment
+    rpc CompletePayment(CompletePaymentRequest) returns (CompletePaymentResponse);
+}
+
+// Request to check available doctors for a specific category and requested time
+message CheckAvailabilityRequest {
+    string category_id = 1;   // e.g., Cardiologist, Dentist
+    google.protobuf.Timestamp requested_date_time = 3; // Requested appointment time
+}
+
+// Response listing the available doctors and their next available time slots
+message CheckAvailabilityResponse {
+    string category_id = 1;
+    repeated DoctorAvailability available_doctors = 2;
+    string status = 3;
+    int32 status_code = 4;
+}
+
+// Doctor availability details
+message DoctorAvailability {
+    string doctor_id = 1;     // ID of the doctor
+    string doctor_name = 2;   // Doctor's name
+    google.protobuf.Timestamp available_date_time = 3; // Doctor's next available time
+}
+
+// Request to confirm an appointment
+message ConfirmAppointmentRequest {
+    string patient_id = 1;    // ID of the patient
+    string doctor_id = 2;     // ID of the doctor
+    google.protobuf.Timestamp confirmed_date_time = 3; // Confirmed appointment time
+}
+
+// Response after confirming an appointment
+message ConfirmAppointmentResponse {
+    string appoinment_token = 1;    // Generated appointment ID
+    string status = 2;            // Status of the appointment confirmation
+    string message = 3;           // Any relevant message (e.g., "Appointment confirmed")
+    int32 status_code = 4;
+}
+
+// Request to complete the payment for a confirmed appointment
+message CompletePaymentRequest {
+    string appointment_token = 1;    // ID of the confirmed appointment
+    string payment_method = 2;    // Payment method (e.g., "credit_card", "paypal")
+    double amount = 3;            // Amount to be paid
+}
+
+// Response after completing the payment
+message CompletePaymentResponse {
+    string status = 1;            // Status of the payment (e.g., "success", "failed")
+    string message = 2;           // Payment-related message
+    int32 status_code = 3;
+}
