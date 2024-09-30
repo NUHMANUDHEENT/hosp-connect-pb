@@ -163,6 +163,7 @@ message AvailabilitySlot {
   string doctor_id = 1;    // ID of the doctor
   string doctor_name = 2;  // Name of the doctor
   google.protobuf.Timestamp start_time = 3;   
+  google.protobuf.Timestamp end_time = 4;
 }
 message StandardResponse {
   string status = 1;
