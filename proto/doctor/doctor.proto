@@ -155,7 +155,7 @@ message GetAvailabilityRequest {
 
 // Response that contains the available slots for the doctor
 message GetAvailabilityResponse {
-  repeated AvailabilitySlot available_slots = 3;  // List of available slots
+  repeated AvailabilitySlot available_slots = 1;  // List of available slots
 }
 
 // Availability slot message
