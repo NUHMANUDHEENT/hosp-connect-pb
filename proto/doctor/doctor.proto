@@ -155,15 +155,14 @@ message GetAvailabilityRequest {
 
 // Response that contains the available slots for the doctor
 message GetAvailabilityResponse {
-  string doctor_id = 1;    // ID of the doctor
-  string doctor_name = 2;  // Name of the doctor
   repeated AvailabilitySlot available_slots = 3;  // List of available slots
 }
 
 // Availability slot message
 message AvailabilitySlot {
-  google.protobuf.Timestamp start_time = 1;   // Start time of available slot
-  google.protobuf.Timestamp end_time = 2;     // End time of available slot
+  string doctor_id = 1;    // ID of the doctor
+  string doctor_name = 2;  // Name of the doctor
+  google.protobuf.Timestamp start_time = 3;   
 }
 message StandardResponse {
   string status = 1;
