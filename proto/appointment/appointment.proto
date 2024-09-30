@@ -4,7 +4,7 @@ package appointment;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "/appoinment";
+option go_package = "/appointment";
 
 // Service Definition
 service AppointmentService {

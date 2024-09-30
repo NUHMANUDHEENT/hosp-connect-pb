@@ -171,5 +171,5 @@ var _AppointmentService_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "appoinment/appoinment.proto",
+	Metadata: "appointment/appointment.proto",
 }
