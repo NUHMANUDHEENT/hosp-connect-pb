@@ -1227,8 +1227,7 @@ type GetAvailabilityRequest struct {
 
 	DoctorId          string                 `protobuf:"bytes,1,opt,name=doctor_id,json=doctorId,proto3" json:"doctor_id,omitempty"`                              // ID of the doctor whose availability we are checking
 	RequestedDateTime *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=requested_date_time,json=requestedDateTime,proto3" json:"requested_date_time,omitempty"` // Start date of availability range
-	// google.protobuf.Timestamp end_date = 3;     // End date of availability range
-	CategoryId int32 `protobuf:"varint,3,opt,name=category_id,json=categoryId,proto3" json:"category_id,omitempty"`
+	CategoryId        int32                  `protobuf:"varint,3,opt,name=category_id,json=categoryId,proto3" json:"category_id,omitempty"`                       // ID of the doctor category
 }
 
 func (x *GetAvailabilityRequest) Reset() {
@@ -1284,7 +1283,6 @@ func (x *GetAvailabilityRequest) GetCategoryId() int32 {
 	return 0
 }
 
-// Response that contains the available slots for the doctor
 type GetAvailabilityResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1332,7 +1330,6 @@ func (x *GetAvailabilityResponse) GetAvailableSlots() []*AvailabilitySlot {
 	return nil
 }
 
-// Availability slot message
 type AvailabilitySlot struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

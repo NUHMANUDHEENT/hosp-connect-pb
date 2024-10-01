@@ -21,7 +21,7 @@ service AppointmentService {
 // Request to check available doctors for a specific category and requested time
 message CheckAvailabilityRequest {
     int32 category_id = 1;   // e.g., Cardiologist, Dentist
-    google.protobuf.Timestamp requested_date_time = 3; // Requested appointment time
+    google.protobuf.Timestamp requested_date_time = 2; // Requested appointment time
 }
 
 // Response listing the available doctors and their next available time slots

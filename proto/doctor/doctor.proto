@@ -149,22 +149,20 @@ message Schedule {
 message GetAvailabilityRequest {
   string doctor_id = 1;    // ID of the doctor whose availability we are checking
   google.protobuf.Timestamp requested_date_time = 2;   // Start date of availability range
-  // google.protobuf.Timestamp end_date = 3;     // End date of availability range
-  int32 category_id = 3;
+  int32 category_id = 3;   // ID of the doctor category
 }
 
-// Response that contains the available slots for the doctor
 message GetAvailabilityResponse {
   repeated AvailabilitySlot available_slots = 1;  // List of available slots
 }
 
-// Availability slot message
 message AvailabilitySlot {
   string doctor_id = 1;    // ID of the doctor
   string doctor_name = 2;  // Name of the doctor
   google.protobuf.Timestamp start_time = 3;   
   google.protobuf.Timestamp end_time = 4;
 }
+
 message StandardResponse {
   string status = 1;
   int32 status_code = 2; 
