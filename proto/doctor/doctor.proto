@@ -29,7 +29,7 @@ service DoctorService {
 
   rpc ConfirmSchedule(ConfirmScheduleRequest) returns (ConfirmScheduleResponse);
 
-  rpc GetAvailability(GetAvailabilityRequest) returns (GetAvailabilityResponse);
+  rpc GetAvailability(GetAvailabilityRequest) returns (StandardResponse);
 }
 
 message SignInRequest {

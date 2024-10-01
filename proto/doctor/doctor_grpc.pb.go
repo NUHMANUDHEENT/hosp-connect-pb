@@ -27,7 +27,7 @@ type DoctorServiceClient interface {
 	StoreAccessToken(ctx context.Context, in *StoreAccessTokenRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	GetAccessToken(ctx context.Context, in *GetAccessTokenRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	ConfirmSchedule(ctx context.Context, in *ConfirmScheduleRequest, opts ...grpc.CallOption) (*ConfirmScheduleResponse, error)
-	GetAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityResponse, error)
+	GetAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 }
 
 type doctorServiceClient struct {
@@ -128,8 +128,8 @@ func (c *doctorServiceClient) ConfirmSchedule(ctx context.Context, in *ConfirmSc
 	return out, nil
 }
 
-func (c *doctorServiceClient) GetAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityResponse, error) {
-	out := new(GetAvailabilityResponse)
+func (c *doctorServiceClient) GetAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/doctor.DoctorService/GetAvailability", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -151,7 +151,7 @@ type DoctorServiceServer interface {
 	StoreAccessToken(context.Context, *StoreAccessTokenRequest) (*StandardResponse, error)
 	GetAccessToken(context.Context, *GetAccessTokenRequest) (*StandardResponse, error)
 	ConfirmSchedule(context.Context, *ConfirmScheduleRequest) (*ConfirmScheduleResponse, error)
-	GetAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityResponse, error)
+	GetAvailability(context.Context, *GetAvailabilityRequest) (*StandardResponse, error)
 	mustEmbedUnimplementedDoctorServiceServer()
 }
 
@@ -189,7 +189,7 @@ func (UnimplementedDoctorServiceServer) GetAccessToken(context.Context, *GetAcce
 func (UnimplementedDoctorServiceServer) ConfirmSchedule(context.Context, *ConfirmScheduleRequest) (*ConfirmScheduleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConfirmSchedule not implemented")
 }
-func (UnimplementedDoctorServiceServer) GetAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityResponse, error) {
+func (UnimplementedDoctorServiceServer) GetAvailability(context.Context, *GetAvailabilityRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAvailability not implemented")
 }
 func (UnimplementedDoctorServiceServer) mustEmbedUnimplementedDoctorServiceServer() {}
