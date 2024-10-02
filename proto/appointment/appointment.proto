@@ -39,22 +39,25 @@ message GetAvailabilityRequest {
 message ConfirmAppointmentRequest {
     string patient_id = 1;    // ID of the patient
     string doctor_id = 2;     // ID of the doctor
-    google.protobuf.Timestamp confirmed_date_time = 3; // Confirmed appointment time
+    int32 specialization_id = 3;
+    google.protobuf.Timestamp confirmed_date_time = 4; // Confirmed appointment time
 }
 
 // Response after confirming an appointment
 message ConfirmAppointmentResponse {
-    string appoinment_token = 1;    // Generated appointment ID
     string status = 2;            // Status of the appointment confirmation
     string message = 3;           // Any relevant message (e.g., "Appointment confirmed")
     int32 status_code = 4;
+    int32 appointment_id = 5;
+    string payment_id =6;
 }
 
 // Request to complete the payment for a confirmed appointment
 message CompletePaymentRequest {
-    string appointment_token = 1;    // ID of the confirmed appointment
+    string appointment_id = 1;    // ID of the confirmed appointment
     string payment_method = 2;    // Payment method (e.g., "credit_card", "paypal")
-    double amount = 3;            // Amount to be paid
+    string payment_id = 3;
+    double amount = 4;            // Amount to be paid
 }
 
 // Response after completing the payment
