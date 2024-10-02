@@ -9,7 +9,7 @@ option go_package = "/appointment";
 // Service Definition
 service AppointmentService {
     // Check available doctors and their next available time slot
-    rpc CheckAvailability(GetAvailabilityRequest) returns (GetAvailabilityRequest);
+    rpc CheckAvailability(GetAvailabilityRequest) returns (GetAvailabilityResponse);
 
     // Confirm an appointment for a specific doctor and time
     rpc ConfirmAppointment(ConfirmAppointmentRequest) returns (ConfirmAppointmentResponse);
