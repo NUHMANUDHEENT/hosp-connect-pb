@@ -9,7 +9,7 @@ option go_package = "/appointment";
 // Service Definition
 service AppointmentService {
     // Check available doctors and their next available time slot
-    rpc CheckAvailability(CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
+    rpc CheckAvailability(GetAvailabilityRequest) returns (GetAvailabilityRequest);
 
     // Confirm an appointment for a specific doctor and time
     rpc ConfirmAppointment(ConfirmAppointmentRequest) returns (ConfirmAppointmentResponse);
@@ -18,26 +18,22 @@ service AppointmentService {
     rpc CompletePayment(CompletePaymentRequest) returns (CompletePaymentResponse);
 }
 
-// Request to check available doctors for a specific category and requested time
-message CheckAvailabilityRequest {
-    int32 category_id = 1;   // e.g., Cardiologist, Dentist
-    google.protobuf.Timestamp requested_date_time = 2; // Requested appointment time
-}
 
-// Response listing the available doctors and their next available time slots
-message CheckAvailabilityResponse {
-    int32 category_id = 1;
-    repeated DoctorAvailability available_doctors = 2;
-    string status = 3;
-    int32 status_code = 4;
-}
-
-// Doctor availability details
-message DoctorAvailability {
-    string doctor_id = 1;     // ID of the doctor
-    string doctor_name = 2;   // Doctor's name
-    google.protobuf.Timestamp available_date_time = 3; // Doctor's next available time
-}
+message GetAvailabilityRequest {
+    string doctor_id = 1;    // ID of the doctor whose availability we are checking
+    google.protobuf.Timestamp requested_date_time = 2;   // Start date of availability range
+    int32 category_id = 3;   // ID of the doctor category
+  }
+  
+  message GetAvailabilityResponse {
+    repeated AvailabilitySlot available_slots = 1;  // List of available slots
+  }
+  
+  message AvailabilitySlot {
+    string doctor_id = 1;    // ID of the doctor
+    string doctor_name = 2;  // Name of the doctor
+  }
+  
 
 // Request to confirm an appointment
 message ConfirmAppointmentRequest {

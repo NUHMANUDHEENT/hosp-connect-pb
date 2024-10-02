@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AppointmentServiceClient interface {
 	// Check available doctors and their next available time slot
-	CheckAvailability(ctx context.Context, in *CheckAvailabilityRequest, opts ...grpc.CallOption) (*CheckAvailabilityResponse, error)
+	CheckAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityRequest, error)
 	// Confirm an appointment for a specific doctor and time
 	ConfirmAppointment(ctx context.Context, in *ConfirmAppointmentRequest, opts ...grpc.CallOption) (*ConfirmAppointmentResponse, error)
 	// Complete payment for an appointment
@@ -33,8 +33,8 @@ func NewAppointmentServiceClient(cc grpc.ClientConnInterface) AppointmentService
 	return &appointmentServiceClient{cc}
 }
 
-func (c *appointmentServiceClient) CheckAvailability(ctx context.Context, in *CheckAvailabilityRequest, opts ...grpc.CallOption) (*CheckAvailabilityResponse, error) {
-	out := new(CheckAvailabilityResponse)
+func (c *appointmentServiceClient) CheckAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityRequest, error) {
+	out := new(GetAvailabilityRequest)
 	err := c.cc.Invoke(ctx, "/appointment.AppointmentService/CheckAvailability", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -65,7 +65,7 @@ func (c *appointmentServiceClient) CompletePayment(ctx context.Context, in *Comp
 // for forward compatibility
 type AppointmentServiceServer interface {
 	// Check available doctors and their next available time slot
-	CheckAvailability(context.Context, *CheckAvailabilityRequest) (*CheckAvailabilityResponse, error)
+	CheckAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityRequest, error)
 	// Confirm an appointment for a specific doctor and time
 	ConfirmAppointment(context.Context, *ConfirmAppointmentRequest) (*ConfirmAppointmentResponse, error)
 	// Complete payment for an appointment
@@ -77,7 +77,7 @@ type AppointmentServiceServer interface {
 type UnimplementedAppointmentServiceServer struct {
 }
 
-func (UnimplementedAppointmentServiceServer) CheckAvailability(context.Context, *CheckAvailabilityRequest) (*CheckAvailabilityResponse, error) {
+func (UnimplementedAppointmentServiceServer) CheckAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityRequest, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAvailability not implemented")
 }
 func (UnimplementedAppointmentServiceServer) ConfirmAppointment(context.Context, *ConfirmAppointmentRequest) (*ConfirmAppointmentResponse, error) {
@@ -100,7 +100,7 @@ func RegisterAppointmentServiceServer(s *grpc.Server, srv AppointmentServiceServ
 }
 
 func _AppointmentService_CheckAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckAvailabilityRequest)
+	in := new(GetAvailabilityRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func _AppointmentService_CheckAvailability_Handler(srv interface{}, ctx context.
 		FullMethod: "/appointment.AppointmentService/CheckAvailability",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppointmentServiceServer).CheckAvailability(ctx, req.(*CheckAvailabilityRequest))
+		return srv.(AppointmentServiceServer).CheckAvailability(ctx, req.(*GetAvailabilityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
