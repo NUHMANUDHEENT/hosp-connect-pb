@@ -12,8 +12,8 @@ service PaymentService {
 message CreateRazorOrderIdRequest{
     string appointment_id = 1;
     string patient_id = 2;
-    int32 specialization_id = 3;
-    string amount =4;
+    int64 specialization_id = 3;
+    double amount =4;
 }
 message CreateRazorOrderIdResponse{
     string razorpay_order_id = 1;
