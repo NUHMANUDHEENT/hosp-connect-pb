@@ -49,7 +49,7 @@ message ConfirmAppointmentResponse {
     string message = 3;           // Any relevant message (e.g., "Appointment confirmed")
     int32 status_code = 4;
     int32 appointment_id = 5;
-    string payment_id =6;
+    string payment_url =6;
 }
 
 // Request to complete the payment for a confirmed appointment
