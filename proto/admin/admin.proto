@@ -11,6 +11,8 @@ service AdminService {
   
   // SignIn method for admin users
   rpc SignIn(SignInRequest) returns (SignInResponse);
+
+  rpc SignUp(SignUpRequest) returns (StandardResponse);
   
   rpc AddDoctor(AddDoctorRequest) returns (StandardResponse);
 
@@ -38,6 +40,11 @@ message SignInResponse{
   int32 status_code = 2; 
   string message = 3;
   string adminId = 4;
+}
+message SignUpRequest{
+  string name =1;
+  string email = 2;
+  string password = 3;
 }
 message AddDoctorRequest {
   string doctorId = 1;

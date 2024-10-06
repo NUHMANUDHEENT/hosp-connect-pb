@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 type AdminServiceClient interface {
 	// SignIn method for admin users
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error)
+	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	UpdateDoctor(ctx context.Context, in *UpdateDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	AddSpecialization(ctx context.Context, in *AddSpecializationRequest, opts ...grpc.CallOption) (*StandardResponse, error)
@@ -41,6 +42,15 @@ func NewAdminServiceClient(cc grpc.ClientConnInterface) AdminServiceClient {
 func (c *adminServiceClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInResponse, error) {
 	out := new(SignInResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/SignIn", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminServiceClient) SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
+	out := new(StandardResponse)
+	err := c.cc.Invoke(ctx, "/admin.AdminService/SignUp", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -134,6 +144,7 @@ func (c *adminServiceClient) ListPatients(ctx context.Context, in *Empty, opts .
 type AdminServiceServer interface {
 	// SignIn method for admin users
 	SignIn(context.Context, *SignInRequest) (*SignInResponse, error)
+	SignUp(context.Context, *SignUpRequest) (*StandardResponse, error)
 	AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error)
 	UpdateDoctor(context.Context, *UpdateDoctorRequest) (*StandardResponse, error)
 	AddSpecialization(context.Context, *AddSpecializationRequest) (*StandardResponse, error)
@@ -152,6 +163,9 @@ type UnimplementedAdminServiceServer struct {
 
 func (UnimplementedAdminServiceServer) SignIn(context.Context, *SignInRequest) (*SignInResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
+}
+func (UnimplementedAdminServiceServer) SignUp(context.Context, *SignUpRequest) (*StandardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
 }
 func (UnimplementedAdminServiceServer) AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddDoctor not implemented")
@@ -207,6 +221,24 @@ func _AdminService_SignIn_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminServiceServer).SignIn(ctx, req.(*SignInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminService_SignUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignUpRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).SignUp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.AdminService/SignUp",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).SignUp(ctx, req.(*SignUpRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -380,6 +412,10 @@ var _AdminService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SignIn",
 			Handler:    _AdminService_SignIn_Handler,
+		},
+		{
+			MethodName: "SignUp",
+			Handler:    _AdminService_SignUp_Handler,
 		},
 		{
 			MethodName: "AddDoctor",
