@@ -30,6 +30,8 @@ service DoctorService {
   rpc ConfirmSchedule(ConfirmScheduleRequest) returns (ConfirmScheduleResponse);
 
   rpc GetAvailability(GetAvailabilityRequest) returns (GetAvailabilityResponse);
+
+  rpc CheckAvailabilityByDoctorId(CheckAvailabilityByDoctorIdRequest) returns (CheckAvailabilityByDoctorIdResponse);
 }
 
 message SignInRequest {
@@ -154,6 +156,14 @@ message GetAvailabilityRequest {
 
 message GetAvailabilityResponse {
   repeated AvailabilitySlot available_slots = 1;  // List of available slots
+}
+message CheckAvailabilityByDoctorIdRequest{
+  string doctor_id =1;
+}
+message CheckAvailabilityByDoctorIdResponse{
+  bool available_status = 1;
+  string status = 2;
+  string message = 3;
 }
 
 message AvailabilitySlot {

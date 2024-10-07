@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 type AppointmentServiceClient interface {
 	// Check available doctors and their next available time slot
 	CheckAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityResponse, error)
+	CheckAvailabilityByDoctorId(ctx context.Context, in *CheckAvailabilityByDoctorIdRequest, opts ...grpc.CallOption) (*CheckAvailabilityByDoctorIdResponse, error)
 	// Confirm an appointment for a specific doctor and time
 	ConfirmAppointment(ctx context.Context, in *ConfirmAppointmentRequest, opts ...grpc.CallOption) (*ConfirmAppointmentResponse, error)
 	// Complete payment for an appointment
@@ -36,6 +37,15 @@ func NewAppointmentServiceClient(cc grpc.ClientConnInterface) AppointmentService
 func (c *appointmentServiceClient) CheckAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityResponse, error) {
 	out := new(GetAvailabilityResponse)
 	err := c.cc.Invoke(ctx, "/appointment.AppointmentService/CheckAvailability", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appointmentServiceClient) CheckAvailabilityByDoctorId(ctx context.Context, in *CheckAvailabilityByDoctorIdRequest, opts ...grpc.CallOption) (*CheckAvailabilityByDoctorIdResponse, error) {
+	out := new(CheckAvailabilityByDoctorIdResponse)
+	err := c.cc.Invoke(ctx, "/appointment.AppointmentService/CheckAvailabilityByDoctorId", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,6 +76,7 @@ func (c *appointmentServiceClient) CompletePayment(ctx context.Context, in *Comp
 type AppointmentServiceServer interface {
 	// Check available doctors and their next available time slot
 	CheckAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityResponse, error)
+	CheckAvailabilityByDoctorId(context.Context, *CheckAvailabilityByDoctorIdRequest) (*CheckAvailabilityByDoctorIdResponse, error)
 	// Confirm an appointment for a specific doctor and time
 	ConfirmAppointment(context.Context, *ConfirmAppointmentRequest) (*ConfirmAppointmentResponse, error)
 	// Complete payment for an appointment
@@ -79,6 +90,9 @@ type UnimplementedAppointmentServiceServer struct {
 
 func (UnimplementedAppointmentServiceServer) CheckAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAvailability not implemented")
+}
+func (UnimplementedAppointmentServiceServer) CheckAvailabilityByDoctorId(context.Context, *CheckAvailabilityByDoctorIdRequest) (*CheckAvailabilityByDoctorIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAvailabilityByDoctorId not implemented")
 }
 func (UnimplementedAppointmentServiceServer) ConfirmAppointment(context.Context, *ConfirmAppointmentRequest) (*ConfirmAppointmentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConfirmAppointment not implemented")
@@ -113,6 +127,24 @@ func _AppointmentService_CheckAvailability_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AppointmentServiceServer).CheckAvailability(ctx, req.(*GetAvailabilityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AppointmentService_CheckAvailabilityByDoctorId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAvailabilityByDoctorIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).CheckAvailabilityByDoctorId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appointment.AppointmentService/CheckAvailabilityByDoctorId",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).CheckAvailabilityByDoctorId(ctx, req.(*CheckAvailabilityByDoctorIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -160,6 +192,10 @@ var _AppointmentService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckAvailability",
 			Handler:    _AppointmentService_CheckAvailability_Handler,
+		},
+		{
+			MethodName: "CheckAvailabilityByDoctorId",
+			Handler:    _AppointmentService_CheckAvailabilityByDoctorId_Handler,
 		},
 		{
 			MethodName: "ConfirmAppointment",
