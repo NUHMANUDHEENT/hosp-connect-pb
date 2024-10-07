@@ -159,6 +159,7 @@ message GetAvailabilityResponse {
 }
 message CheckAvailabilityByDoctorIdRequest{
   string doctor_id =1;
+  google.protobuf.Timestamp requested_date_time = 2;
 }
 message CheckAvailabilityByDoctorIdResponse{
   bool available_status = 1;
