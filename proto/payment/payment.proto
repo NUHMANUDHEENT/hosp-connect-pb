@@ -10,10 +10,11 @@ service PaymentService {
   rpc PaymentCallback (PaymentCallBackRequest) returns (PaymentCallBackResponse);
 }
 message CreateRazorOrderIdRequest{
-    string appointment_id = 1;
+    int64 appointment_id = 1;
     string patient_id = 2;
     int64 specialization_id = 3;
     double amount =4;
+    string type =5;
 }
 message CreateRazorOrderIdResponse{
     string payment_url = 1;
