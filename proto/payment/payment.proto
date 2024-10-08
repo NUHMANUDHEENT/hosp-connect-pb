@@ -41,6 +41,7 @@ message PaymentCallBackRequest {
   string signature = 3;
   string status = 4;  
   string patient_id = 5;
+  double amount = 6;
 }
 
 // Message structure for the callback response
