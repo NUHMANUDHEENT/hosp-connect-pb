@@ -21,6 +21,7 @@ message CreateRazorOrderIdResponse{
     string status =2;
     string message = 3;
     int32 status_code =4;
+    string order_id =5;
 }
 message CreateAppointmentFeePaymentRequest {
   string patient_id = 1;
