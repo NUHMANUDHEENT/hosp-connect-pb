@@ -7,6 +7,7 @@ option go_package = "/payment";
 service PaymentService {
   rpc CreateRazorOrderId(CreateRazorOrderIdRequest) returns (CreateRazorOrderIdResponse);
   rpc CreateAppointmentFeePayment(CreateAppointmentFeePaymentRequest) returns (CreateAppointmentFeePaymentResponse);
+  rpc PaymentCallback (PaymentCallBackRequest) returns (PaymentCallBackResponse);
 }
 message CreateRazorOrderIdRequest{
     string appointment_id = 1;
@@ -32,4 +33,16 @@ message CreateAppointmentFeePaymentResponse {
   string status = 2;
   string message = 3;
   string payment_url = 5;
+}
+message PaymentCallBackRequest {
+  string order_id = 1;
+  string payment_id = 2;
+  string signature = 3;
+  string status = 4;   // Can be "success" or "failed"
+}
+
+// Message structure for the callback response
+message PaymentCallBackResponse {
+  string message = 1;
+  bool success = 2;
 }

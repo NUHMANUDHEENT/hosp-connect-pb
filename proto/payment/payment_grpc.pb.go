@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 type PaymentServiceClient interface {
 	CreateRazorOrderId(ctx context.Context, in *CreateRazorOrderIdRequest, opts ...grpc.CallOption) (*CreateRazorOrderIdResponse, error)
 	CreateAppointmentFeePayment(ctx context.Context, in *CreateAppointmentFeePaymentRequest, opts ...grpc.CallOption) (*CreateAppointmentFeePaymentResponse, error)
+	PaymentCallback(ctx context.Context, in *PaymentCallBackRequest, opts ...grpc.CallOption) (*PaymentCallBackResponse, error)
 }
 
 type paymentServiceClient struct {
@@ -47,12 +48,22 @@ func (c *paymentServiceClient) CreateAppointmentFeePayment(ctx context.Context, 
 	return out, nil
 }
 
+func (c *paymentServiceClient) PaymentCallback(ctx context.Context, in *PaymentCallBackRequest, opts ...grpc.CallOption) (*PaymentCallBackResponse, error) {
+	out := new(PaymentCallBackResponse)
+	err := c.cc.Invoke(ctx, "/payment.PaymentService/PaymentCallback", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PaymentServiceServer is the server API for PaymentService service.
 // All implementations must embed UnimplementedPaymentServiceServer
 // for forward compatibility
 type PaymentServiceServer interface {
 	CreateRazorOrderId(context.Context, *CreateRazorOrderIdRequest) (*CreateRazorOrderIdResponse, error)
 	CreateAppointmentFeePayment(context.Context, *CreateAppointmentFeePaymentRequest) (*CreateAppointmentFeePaymentResponse, error)
+	PaymentCallback(context.Context, *PaymentCallBackRequest) (*PaymentCallBackResponse, error)
 	mustEmbedUnimplementedPaymentServiceServer()
 }
 
@@ -65,6 +76,9 @@ func (UnimplementedPaymentServiceServer) CreateRazorOrderId(context.Context, *Cr
 }
 func (UnimplementedPaymentServiceServer) CreateAppointmentFeePayment(context.Context, *CreateAppointmentFeePaymentRequest) (*CreateAppointmentFeePaymentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAppointmentFeePayment not implemented")
+}
+func (UnimplementedPaymentServiceServer) PaymentCallback(context.Context, *PaymentCallBackRequest) (*PaymentCallBackResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PaymentCallback not implemented")
 }
 func (UnimplementedPaymentServiceServer) mustEmbedUnimplementedPaymentServiceServer() {}
 
@@ -115,6 +129,24 @@ func _PaymentService_CreateAppointmentFeePayment_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentService_PaymentCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PaymentCallBackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentServiceServer).PaymentCallback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/payment.PaymentService/PaymentCallback",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentServiceServer).PaymentCallback(ctx, req.(*PaymentCallBackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _PaymentService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "payment.PaymentService",
 	HandlerType: (*PaymentServiceServer)(nil),
@@ -126,6 +158,10 @@ var _PaymentService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateAppointmentFeePayment",
 			Handler:    _PaymentService_CreateAppointmentFeePayment_Handler,
+		},
+		{
+			MethodName: "PaymentCallback",
+			Handler:    _PaymentService_PaymentCallback_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
