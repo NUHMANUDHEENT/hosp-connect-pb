@@ -24,6 +24,7 @@ type AppointmentServiceClient interface {
 	ConfirmAppointment(ctx context.Context, in *ConfirmAppointmentRequest, opts ...grpc.CallOption) (*ConfirmAppointmentResponse, error)
 	// Complete payment for an appointment
 	CompletePayment(ctx context.Context, in *CompletePaymentRequest, opts ...grpc.CallOption) (*CompletePaymentResponse, error)
+	GetUpcomingAppointments(ctx context.Context, in *GetAppointmentsRequest, opts ...grpc.CallOption) (*GetAppointmentsResponse, error)
 }
 
 type appointmentServiceClient struct {
@@ -70,6 +71,15 @@ func (c *appointmentServiceClient) CompletePayment(ctx context.Context, in *Comp
 	return out, nil
 }
 
+func (c *appointmentServiceClient) GetUpcomingAppointments(ctx context.Context, in *GetAppointmentsRequest, opts ...grpc.CallOption) (*GetAppointmentsResponse, error) {
+	out := new(GetAppointmentsResponse)
+	err := c.cc.Invoke(ctx, "/appointment.AppointmentService/GetUpcomingAppointments", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppointmentServiceServer is the server API for AppointmentService service.
 // All implementations must embed UnimplementedAppointmentServiceServer
 // for forward compatibility
@@ -81,6 +91,7 @@ type AppointmentServiceServer interface {
 	ConfirmAppointment(context.Context, *ConfirmAppointmentRequest) (*ConfirmAppointmentResponse, error)
 	// Complete payment for an appointment
 	CompletePayment(context.Context, *CompletePaymentRequest) (*CompletePaymentResponse, error)
+	GetUpcomingAppointments(context.Context, *GetAppointmentsRequest) (*GetAppointmentsResponse, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -99,6 +110,9 @@ func (UnimplementedAppointmentServiceServer) ConfirmAppointment(context.Context,
 }
 func (UnimplementedAppointmentServiceServer) CompletePayment(context.Context, *CompletePaymentRequest) (*CompletePaymentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompletePayment not implemented")
+}
+func (UnimplementedAppointmentServiceServer) GetUpcomingAppointments(context.Context, *GetAppointmentsRequest) (*GetAppointmentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUpcomingAppointments not implemented")
 }
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}
 
@@ -185,6 +199,24 @@ func _AppointmentService_CompletePayment_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_GetUpcomingAppointments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAppointmentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).GetUpcomingAppointments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appointment.AppointmentService/GetUpcomingAppointments",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).GetUpcomingAppointments(ctx, req.(*GetAppointmentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _AppointmentService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "appointment.AppointmentService",
 	HandlerType: (*AppointmentServiceServer)(nil),
@@ -204,6 +236,10 @@ var _AppointmentService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CompletePayment",
 			Handler:    _AppointmentService_CompletePayment_Handler,
+		},
+		{
+			MethodName: "GetUpcomingAppointments",
+			Handler:    _AppointmentService_GetUpcomingAppointments_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

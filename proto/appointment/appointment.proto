@@ -18,6 +18,8 @@ service AppointmentService {
 
     // Complete payment for an appointment
     rpc CompletePayment(CompletePaymentRequest) returns (CompletePaymentResponse);
+
+    rpc GetUpcomingAppointments(GetAppointmentsRequest) returns (GetAppointmentsResponse);
 }
 
 
@@ -74,4 +76,23 @@ message CompletePaymentResponse {
     string status = 1;            // Status of the payment (e.g., "success", "failed")
     string message = 2;           // Payment-related message
     int32 status_code = 3;
+}
+message GetAppointmentsRequest {
+  string patient_id = 1;
+}
+
+message Appointment {
+  string appointment_id = 1;
+  string doctor_id = 2;
+  string patient_id = 3;
+  string doctor_name = 4;
+  string specialization = 5;
+  string appointment_time = 6; // Timestamp in ISO 8601 format
+}
+
+message GetAppointmentsResponse {
+  repeated Appointment appointments = 1;
+  string message = 2; 
+  string status = 3;
+  int32 status_code = 4;
 }
