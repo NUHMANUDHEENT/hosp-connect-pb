@@ -157,21 +157,23 @@ message GetAvailabilityRequest {
 message GetAvailabilityResponse {
   repeated AvailabilitySlot available_slots = 1;  // List of available slots
 }
-message CheckAvailabilityByDoctorIdRequest{
-  string doctor_id =1;
-  google.protobuf.Timestamp requested_date_time = 2;
-}
-message CheckAvailabilityByDoctorIdResponse{
-  bool available_status = 1;
-  string status = 2;
-  string message = 3;
-}
-
 message AvailabilitySlot {
   string doctor_id = 1;    // ID of the doctor
   string doctor_name = 2;  // Name of the doctor
 }
+message CheckAvailabilityByDoctorIdRequest{
+  string doctor_id =1;
+}
+message CheckAvailabilityByDoctorIdResponse{
+  string status = 1;
+  string doctor_id =2;
+  repeated DoctorAvailability doctor_availability =4;
 
+}
+message DoctorAvailability{
+  string Date_time = 1;
+  string Is_available =2;
+}
 message StandardResponse {
   string status = 1;
   int32 status_code = 2; 
