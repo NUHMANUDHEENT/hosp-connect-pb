@@ -122,7 +122,7 @@ message GetPrescriptionRequest{
 }
 message GetPrescriptionResponse{
   string status = 1;
-  repeated GetPresc prescription = 2;
+  repeated GetPresc GetPresc = 2;
   string message = 3;
   string status_code = 4;
 }
