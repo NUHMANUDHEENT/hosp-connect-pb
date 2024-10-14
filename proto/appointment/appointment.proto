@@ -56,7 +56,7 @@ message ConfirmAppointmentRequest {
     int32 specialization_id = 3;
     google.protobuf.Timestamp confirmed_date_time = 4; // Confirmed appointment time
 }
-
+  
 // Response after confirming an appointment
 message ConfirmAppointmentResponse {
     string status = 2;            // Status of the appointment confirmation

@@ -18,6 +18,8 @@ service PatientService {
   rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
 
    rpc UpdateProfile(UpdateProfileRequest) returns (StandardResponse);
+
+   rpc AddPrescription(AddPrescriptionRequest) returns (StandardResponse);
 }
 
 
@@ -102,4 +104,16 @@ message ListPatientsResponse {
     string status = 2;
     int32 statusCode = 3;
     string error = 4;
+}
+message AddPrescriptionRequest{
+  string patient_id = 1;
+  string doctor_id = 2;
+  repeated Prescription Prescription =3;
+}
+message Prescription{
+  string patient_id = 1;
+  string doctor_id = 2;
+  string medication = 3;
+  string dosage = 4;
+  string Frequency =5;
 }
