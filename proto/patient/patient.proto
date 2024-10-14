@@ -115,10 +115,6 @@ message AddPrescriptionRequest{
 message Prescription{
   string patient_id = 1;
   string doctor_id = 2;
-  string medication = 3;
-  string dosage = 4;
-  string Frequency =5;
-  string prescription_time =6;
 }
 message GetPrescriptionRequest{
     string patient_id =1;
@@ -129,4 +125,9 @@ message GetPrescriptionResponse{
   repeated Prescription prescription = 2;
   string message = 3;
   string status_code = 4;
+}
+message GetPresc{
+  string doctor_id= 1;
+  string Prescription = 2;
+  string prescription_time =3;
 }
