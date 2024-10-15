@@ -131,6 +131,6 @@ message GetPrescriptionResponse{
 }
 message GetPresc{
   string doctor_id= 1;
-  Prescription Prescriptions = 2;
+  repeated Prescription Prescriptions = 2;
   string prescription_time =3;
 }
