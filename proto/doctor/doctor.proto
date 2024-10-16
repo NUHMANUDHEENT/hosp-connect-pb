@@ -31,7 +31,6 @@ service DoctorService {
 
   rpc CheckAvailabilityByDoctorId(CheckAvailabilityByDoctorIdRequest) returns (CheckAvailabilityByDoctorIdResponse);
 
-  rpc CreateRoomForVideoTreatment(VideoRoomRequest) returns (VideoRoomRequest);
 }
 
 message SignInRequest {
@@ -180,15 +179,3 @@ message StandardResponse {
   string error = 4;    
   google.protobuf.Any data = 5;  
 }
-message VideoRoomRequest{
-  string doctor_id = 1;
-  string patient_id = 2;
-  int64 specialization_id =3;
-}
-message VideoRoomResponse{
-  string message = 1;
-  string status = 2;
-  string status_code = 3;
-  string room_url =4;
-}
-

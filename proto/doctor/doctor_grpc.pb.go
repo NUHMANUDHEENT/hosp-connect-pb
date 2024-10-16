@@ -28,7 +28,6 @@ type DoctorServiceClient interface {
 	ConfirmSchedule(ctx context.Context, in *ConfirmScheduleRequest, opts ...grpc.CallOption) (*ConfirmScheduleResponse, error)
 	GetAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityResponse, error)
 	CheckAvailabilityByDoctorId(ctx context.Context, in *CheckAvailabilityByDoctorIdRequest, opts ...grpc.CallOption) (*CheckAvailabilityByDoctorIdResponse, error)
-	CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomRequest, error)
 }
 
 type doctorServiceClient struct {
@@ -138,15 +137,6 @@ func (c *doctorServiceClient) CheckAvailabilityByDoctorId(ctx context.Context, i
 	return out, nil
 }
 
-func (c *doctorServiceClient) CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomRequest, error) {
-	out := new(VideoRoomRequest)
-	err := c.cc.Invoke(ctx, "/doctor.DoctorService/CreateRoomForVideoTreatment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // DoctorServiceServer is the server API for DoctorService service.
 // All implementations must embed UnimplementedDoctorServiceServer
 // for forward compatibility
@@ -162,7 +152,6 @@ type DoctorServiceServer interface {
 	ConfirmSchedule(context.Context, *ConfirmScheduleRequest) (*ConfirmScheduleResponse, error)
 	GetAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityResponse, error)
 	CheckAvailabilityByDoctorId(context.Context, *CheckAvailabilityByDoctorIdRequest) (*CheckAvailabilityByDoctorIdResponse, error)
-	CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomRequest, error)
 	mustEmbedUnimplementedDoctorServiceServer()
 }
 
@@ -202,9 +191,6 @@ func (UnimplementedDoctorServiceServer) GetAvailability(context.Context, *GetAva
 }
 func (UnimplementedDoctorServiceServer) CheckAvailabilityByDoctorId(context.Context, *CheckAvailabilityByDoctorIdRequest) (*CheckAvailabilityByDoctorIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAvailabilityByDoctorId not implemented")
-}
-func (UnimplementedDoctorServiceServer) CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomRequest, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateRoomForVideoTreatment not implemented")
 }
 func (UnimplementedDoctorServiceServer) mustEmbedUnimplementedDoctorServiceServer() {}
 
@@ -417,24 +403,6 @@ func _DoctorService_CheckAvailabilityByDoctorId_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DoctorService_CreateRoomForVideoTreatment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VideoRoomRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DoctorServiceServer).CreateRoomForVideoTreatment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/doctor.DoctorService/CreateRoomForVideoTreatment",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DoctorServiceServer).CreateRoomForVideoTreatment(ctx, req.(*VideoRoomRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 var _DoctorService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "doctor.DoctorService",
 	HandlerType: (*DoctorServiceServer)(nil),
@@ -482,10 +450,6 @@ var _DoctorService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckAvailabilityByDoctorId",
 			Handler:    _DoctorService_CheckAvailabilityByDoctorId_Handler,
-		},
-		{
-			MethodName: "CreateRoomForVideoTreatment",
-			Handler:    _DoctorService_CreateRoomForVideoTreatment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

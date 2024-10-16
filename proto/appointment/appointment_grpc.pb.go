@@ -25,6 +25,7 @@ type AppointmentServiceClient interface {
 	// Complete payment for an appointment
 	CompletePayment(ctx context.Context, in *CompletePaymentRequest, opts ...grpc.CallOption) (*CompletePaymentResponse, error)
 	GetUpcomingAppointments(ctx context.Context, in *GetAppointmentsRequest, opts ...grpc.CallOption) (*GetAppointmentsResponse, error)
+	CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomRequest, error)
 }
 
 type appointmentServiceClient struct {
@@ -80,6 +81,15 @@ func (c *appointmentServiceClient) GetUpcomingAppointments(ctx context.Context, 
 	return out, nil
 }
 
+func (c *appointmentServiceClient) CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomRequest, error) {
+	out := new(VideoRoomRequest)
+	err := c.cc.Invoke(ctx, "/appointment.AppointmentService/CreateRoomForVideoTreatment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppointmentServiceServer is the server API for AppointmentService service.
 // All implementations must embed UnimplementedAppointmentServiceServer
 // for forward compatibility
@@ -92,6 +102,7 @@ type AppointmentServiceServer interface {
 	// Complete payment for an appointment
 	CompletePayment(context.Context, *CompletePaymentRequest) (*CompletePaymentResponse, error)
 	GetUpcomingAppointments(context.Context, *GetAppointmentsRequest) (*GetAppointmentsResponse, error)
+	CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomRequest, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -113,6 +124,9 @@ func (UnimplementedAppointmentServiceServer) CompletePayment(context.Context, *C
 }
 func (UnimplementedAppointmentServiceServer) GetUpcomingAppointments(context.Context, *GetAppointmentsRequest) (*GetAppointmentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUpcomingAppointments not implemented")
+}
+func (UnimplementedAppointmentServiceServer) CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomRequest, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRoomForVideoTreatment not implemented")
 }
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}
 
@@ -217,6 +231,24 @@ func _AppointmentService_GetUpcomingAppointments_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_CreateRoomForVideoTreatment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VideoRoomRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).CreateRoomForVideoTreatment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appointment.AppointmentService/CreateRoomForVideoTreatment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).CreateRoomForVideoTreatment(ctx, req.(*VideoRoomRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _AppointmentService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "appointment.AppointmentService",
 	HandlerType: (*AppointmentServiceServer)(nil),
@@ -240,6 +272,10 @@ var _AppointmentService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUpcomingAppointments",
 			Handler:    _AppointmentService_GetUpcomingAppointments_Handler,
+		},
+		{
+			MethodName: "CreateRoomForVideoTreatment",
+			Handler:    _AppointmentService_CreateRoomForVideoTreatment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
