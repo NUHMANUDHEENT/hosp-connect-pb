@@ -183,7 +183,7 @@ message StandardResponse {
 message VideoRoomRequest{
   string doctor_id = 1;
   string patient_id = 2;
-  string specialization_id =3;
+  int64 specialization_id =3;
 }
 message VideoRoomResponse{
   string message = 1;
