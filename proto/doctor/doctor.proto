@@ -19,8 +19,6 @@ service DoctorService {
 
   rpc AddPrescription (AddPrescriptionRequest) returns (StandardResponse);
 
-  rpc GetPastPrescriptions (GetPastPrescriptionsRequest) returns (StandardResponse);
-
   rpc AddDoctor(AddDoctorRequest) returns (StandardResponse);
 
   rpc StoreAccessToken (StoreAccessTokenRequest) returns (StandardResponse);
@@ -32,6 +30,8 @@ service DoctorService {
   rpc GetAvailability(GetAvailabilityRequest) returns (GetAvailabilityResponse);
 
   rpc CheckAvailabilityByDoctorId(CheckAvailabilityByDoctorIdRequest) returns (CheckAvailabilityByDoctorIdResponse);
+
+  rpc CreateRoomForVideoTreatment(VideoRoomRequest) returns (VideoRoomRequest);
 }
 
 message SignInRequest {
@@ -180,5 +180,15 @@ message StandardResponse {
   string error = 4;    
   google.protobuf.Any data = 5;  
 }
-
+message VideoRoomRequest{
+  string doctor_id = 1;
+  string patient_id = 2;
+  string specialization_id =3;
+}
+message VideoRoomResponse{
+  string message = 1;
+  string status = 2;
+  string status_code = 3;
+  string room_url =4;
+}
 
