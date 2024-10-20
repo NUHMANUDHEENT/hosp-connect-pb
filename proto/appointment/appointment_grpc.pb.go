@@ -25,7 +25,7 @@ type AppointmentServiceClient interface {
 	// Complete payment for an appointment
 	CompletePayment(ctx context.Context, in *CompletePaymentRequest, opts ...grpc.CallOption) (*CompletePaymentResponse, error)
 	GetUpcomingAppointments(ctx context.Context, in *GetAppointmentsRequest, opts ...grpc.CallOption) (*GetAppointmentsResponse, error)
-	CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomRequest, error)
+	CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomResponse, error)
 }
 
 type appointmentServiceClient struct {
@@ -81,8 +81,8 @@ func (c *appointmentServiceClient) GetUpcomingAppointments(ctx context.Context, 
 	return out, nil
 }
 
-func (c *appointmentServiceClient) CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomRequest, error) {
-	out := new(VideoRoomRequest)
+func (c *appointmentServiceClient) CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomResponse, error) {
+	out := new(VideoRoomResponse)
 	err := c.cc.Invoke(ctx, "/appointment.AppointmentService/CreateRoomForVideoTreatment", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -102,7 +102,7 @@ type AppointmentServiceServer interface {
 	// Complete payment for an appointment
 	CompletePayment(context.Context, *CompletePaymentRequest) (*CompletePaymentResponse, error)
 	GetUpcomingAppointments(context.Context, *GetAppointmentsRequest) (*GetAppointmentsResponse, error)
-	CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomRequest, error)
+	CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomResponse, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -125,7 +125,7 @@ func (UnimplementedAppointmentServiceServer) CompletePayment(context.Context, *C
 func (UnimplementedAppointmentServiceServer) GetUpcomingAppointments(context.Context, *GetAppointmentsRequest) (*GetAppointmentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUpcomingAppointments not implemented")
 }
-func (UnimplementedAppointmentServiceServer) CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomRequest, error) {
+func (UnimplementedAppointmentServiceServer) CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRoomForVideoTreatment not implemented")
 }
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}

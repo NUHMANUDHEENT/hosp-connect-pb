@@ -5,7 +5,7 @@ package appointment;
 import "google/protobuf/timestamp.proto";
 
 option go_package = "/appointment";
-
+    
 // Service Definition
 service AppointmentService {
     // Check available doctors and their next available time slot
@@ -21,14 +21,15 @@ service AppointmentService {
 
     rpc GetUpcomingAppointments(GetAppointmentsRequest) returns (GetAppointmentsResponse);
 
-    rpc CreateRoomForVideoTreatment(VideoRoomRequest) returns (VideoRoomRequest);
+    rpc CreateRoomForVideoTreatment(VideoRoomRequest) returns (VideoRoomResponse);
 }
 
 
 message GetAvailabilityRequest {
-    string doctor_id = 1;    // ID of the doctor whose availability we are checking
-    google.protobuf.Timestamp requested_date_time = 2;   // Start date of availability range
-    int32 category_id = 3;   // ID of the doctor category
+    string doctor_id = 1;    
+    google.protobuf.Timestamp requested_date_time = 2;  
+    int32 category_id = 3;
+     
   }
   
   message GetAvailabilityResponse {
