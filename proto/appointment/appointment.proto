@@ -58,6 +58,7 @@ message ConfirmAppointmentRequest {
     string doctor_id = 2;     // ID of the doctor
     int32 specialization_id = 3;
     google.protobuf.Timestamp confirmed_date_time = 4; // Confirmed appointment time
+    string type =5;
 }
   
 // Response after confirming an appointment
