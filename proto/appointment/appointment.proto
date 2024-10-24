@@ -91,10 +91,10 @@ message GetAppointmentsRequest {
 message Appointment {
   int64 appointment_id = 1;
   string doctor_id = 2;
-  string patient_id = 3;
+  string appointment_type = 3;
   string doctor_name = 4;
   int64 specialization = 5;
-  string appointment_time = 6; // Timestamp in ISO 8601 format
+  string appointment_time = 6; 
 }
 
 message GetAppointmentsResponse {
