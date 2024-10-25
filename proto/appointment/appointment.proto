@@ -19,6 +19,8 @@ service AppointmentService {
     // Complete payment for an appointment
     rpc CompletePayment(CompletePaymentRequest) returns (CompletePaymentResponse);
 
+    rpc GetAppointmentDetails(GetAppointmentDetailsRequest) returns (GetAppointmentDetailsResponse);
+
     rpc GetUpcomingAppointments(GetAppointmentsRequest) returns (GetAppointmentsResponse);
 
     rpc CreateRoomForVideoTreatment(VideoRoomRequest) returns (VideoRoomResponse);
@@ -84,6 +86,13 @@ message CompletePaymentResponse {
     string message = 2;           // Payment-related message
     int32 status_code = 3;
 }
+message GetAppointmentDetailsRequest{
+  string order_id =1;
+}
+message GetAppointmentDetailsResponse{
+  Appointment appointment =1;
+}
+
 message GetAppointmentsRequest {
   string patient_id = 1;
 }

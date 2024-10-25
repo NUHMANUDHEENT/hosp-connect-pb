@@ -24,6 +24,7 @@ type AppointmentServiceClient interface {
 	ConfirmAppointment(ctx context.Context, in *ConfirmAppointmentRequest, opts ...grpc.CallOption) (*ConfirmAppointmentResponse, error)
 	// Complete payment for an appointment
 	CompletePayment(ctx context.Context, in *CompletePaymentRequest, opts ...grpc.CallOption) (*CompletePaymentResponse, error)
+	GetAppointmentDetails(ctx context.Context, in *GetAppointmentDetailsRequest, opts ...grpc.CallOption) (*GetAppointmentDetailsResponse, error)
 	GetUpcomingAppointments(ctx context.Context, in *GetAppointmentsRequest, opts ...grpc.CallOption) (*GetAppointmentsResponse, error)
 	CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomResponse, error)
 }
@@ -72,6 +73,15 @@ func (c *appointmentServiceClient) CompletePayment(ctx context.Context, in *Comp
 	return out, nil
 }
 
+func (c *appointmentServiceClient) GetAppointmentDetails(ctx context.Context, in *GetAppointmentDetailsRequest, opts ...grpc.CallOption) (*GetAppointmentDetailsResponse, error) {
+	out := new(GetAppointmentDetailsResponse)
+	err := c.cc.Invoke(ctx, "/appointment.AppointmentService/GetAppointmentDetails", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *appointmentServiceClient) GetUpcomingAppointments(ctx context.Context, in *GetAppointmentsRequest, opts ...grpc.CallOption) (*GetAppointmentsResponse, error) {
 	out := new(GetAppointmentsResponse)
 	err := c.cc.Invoke(ctx, "/appointment.AppointmentService/GetUpcomingAppointments", in, out, opts...)
@@ -101,6 +111,7 @@ type AppointmentServiceServer interface {
 	ConfirmAppointment(context.Context, *ConfirmAppointmentRequest) (*ConfirmAppointmentResponse, error)
 	// Complete payment for an appointment
 	CompletePayment(context.Context, *CompletePaymentRequest) (*CompletePaymentResponse, error)
+	GetAppointmentDetails(context.Context, *GetAppointmentDetailsRequest) (*GetAppointmentDetailsResponse, error)
 	GetUpcomingAppointments(context.Context, *GetAppointmentsRequest) (*GetAppointmentsResponse, error)
 	CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomResponse, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
@@ -121,6 +132,9 @@ func (UnimplementedAppointmentServiceServer) ConfirmAppointment(context.Context,
 }
 func (UnimplementedAppointmentServiceServer) CompletePayment(context.Context, *CompletePaymentRequest) (*CompletePaymentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompletePayment not implemented")
+}
+func (UnimplementedAppointmentServiceServer) GetAppointmentDetails(context.Context, *GetAppointmentDetailsRequest) (*GetAppointmentDetailsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAppointmentDetails not implemented")
 }
 func (UnimplementedAppointmentServiceServer) GetUpcomingAppointments(context.Context, *GetAppointmentsRequest) (*GetAppointmentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUpcomingAppointments not implemented")
@@ -213,6 +227,24 @@ func _AppointmentService_CompletePayment_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_GetAppointmentDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAppointmentDetailsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).GetAppointmentDetails(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appointment.AppointmentService/GetAppointmentDetails",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).GetAppointmentDetails(ctx, req.(*GetAppointmentDetailsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AppointmentService_GetUpcomingAppointments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAppointmentsRequest)
 	if err := dec(in); err != nil {
@@ -268,6 +300,10 @@ var _AppointmentService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CompletePayment",
 			Handler:    _AppointmentService_CompletePayment_Handler,
+		},
+		{
+			MethodName: "GetAppointmentDetails",
+			Handler:    _AppointmentService_GetAppointmentDetails_Handler,
 		},
 		{
 			MethodName: "GetUpcomingAppointments",
