@@ -90,7 +90,10 @@ message GetAppointmentDetailsRequest{
   string order_id =1;
 }
 message GetAppointmentDetailsResponse{
-  Appointment appointment =1;
+  string status = 1;
+  string status_code = 2;
+  string message = 3;
+  Appointment appointment =4;
 }
 
 message GetAppointmentsRequest {
