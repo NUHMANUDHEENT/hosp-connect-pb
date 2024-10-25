@@ -90,10 +90,14 @@ message GetAppointmentDetailsRequest{
   string order_id =1;
 }
 message GetAppointmentDetailsResponse{
-  string status = 1;
-  string status_code = 2;
-  string message = 3;
-  Appointment appointment =4;
+  int64 appointment_id = 1;
+  string doctor_id = 2;
+  string appointment_type = 3;
+  int64 specialization_id = 4;
+  google.protobuf.Timestamp appointment_time = 5; 
+  string status = 6;
+  int64 status_code = 7;
+  string message = 8;
 }
 
 message GetAppointmentsRequest {
