@@ -20,6 +20,7 @@ type PaymentServiceClient interface {
 	CreateRazorOrderId(ctx context.Context, in *CreateRazorOrderIdRequest, opts ...grpc.CallOption) (*CreateRazorOrderIdResponse, error)
 	CreateAppointmentFeePayment(ctx context.Context, in *CreateAppointmentFeePaymentRequest, opts ...grpc.CallOption) (*CreateAppointmentFeePaymentResponse, error)
 	PaymentCallback(ctx context.Context, in *PaymentCallBackRequest, opts ...grpc.CallOption) (*PaymentCallBackResponse, error)
+	GetTotalRevenue(ctx context.Context, in *GetTotalRevenueRequest, opts ...grpc.CallOption) (*GetTotalRevenueResponse, error)
 }
 
 type paymentServiceClient struct {
@@ -57,6 +58,15 @@ func (c *paymentServiceClient) PaymentCallback(ctx context.Context, in *PaymentC
 	return out, nil
 }
 
+func (c *paymentServiceClient) GetTotalRevenue(ctx context.Context, in *GetTotalRevenueRequest, opts ...grpc.CallOption) (*GetTotalRevenueResponse, error) {
+	out := new(GetTotalRevenueResponse)
+	err := c.cc.Invoke(ctx, "/payment.PaymentService/GetTotalRevenue", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PaymentServiceServer is the server API for PaymentService service.
 // All implementations must embed UnimplementedPaymentServiceServer
 // for forward compatibility
@@ -64,6 +74,7 @@ type PaymentServiceServer interface {
 	CreateRazorOrderId(context.Context, *CreateRazorOrderIdRequest) (*CreateRazorOrderIdResponse, error)
 	CreateAppointmentFeePayment(context.Context, *CreateAppointmentFeePaymentRequest) (*CreateAppointmentFeePaymentResponse, error)
 	PaymentCallback(context.Context, *PaymentCallBackRequest) (*PaymentCallBackResponse, error)
+	GetTotalRevenue(context.Context, *GetTotalRevenueRequest) (*GetTotalRevenueResponse, error)
 	mustEmbedUnimplementedPaymentServiceServer()
 }
 
@@ -79,6 +90,9 @@ func (UnimplementedPaymentServiceServer) CreateAppointmentFeePayment(context.Con
 }
 func (UnimplementedPaymentServiceServer) PaymentCallback(context.Context, *PaymentCallBackRequest) (*PaymentCallBackResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PaymentCallback not implemented")
+}
+func (UnimplementedPaymentServiceServer) GetTotalRevenue(context.Context, *GetTotalRevenueRequest) (*GetTotalRevenueResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTotalRevenue not implemented")
 }
 func (UnimplementedPaymentServiceServer) mustEmbedUnimplementedPaymentServiceServer() {}
 
@@ -147,6 +161,24 @@ func _PaymentService_PaymentCallback_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentService_GetTotalRevenue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTotalRevenueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentServiceServer).GetTotalRevenue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/payment.PaymentService/GetTotalRevenue",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentServiceServer).GetTotalRevenue(ctx, req.(*GetTotalRevenueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _PaymentService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "payment.PaymentService",
 	HandlerType: (*PaymentServiceServer)(nil),
@@ -162,6 +194,10 @@ var _PaymentService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PaymentCallback",
 			Handler:    _PaymentService_PaymentCallback_Handler,
+		},
+		{
+			MethodName: "GetTotalRevenue",
+			Handler:    _PaymentService_GetTotalRevenue_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

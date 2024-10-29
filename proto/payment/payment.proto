@@ -8,6 +8,7 @@ service PaymentService {
   rpc CreateRazorOrderId(CreateRazorOrderIdRequest) returns (CreateRazorOrderIdResponse);
   rpc CreateAppointmentFeePayment(CreateAppointmentFeePaymentRequest) returns (CreateAppointmentFeePaymentResponse);
   rpc PaymentCallback (PaymentCallBackRequest) returns (PaymentCallBackResponse);
+  rpc GetTotalRevenue(GetTotalRevenueRequest) returns (GetTotalRevenueResponse);
 }
 message CreateRazorOrderIdRequest{
     int64 appointment_id = 1;
@@ -49,4 +50,9 @@ message PaymentCallBackRequest {
 message PaymentCallBackResponse {
   string message = 1;
   bool success = 2;
+}
+message GetTotalRevenueRequest{}
+
+message GetTotalRevenueResponse{
+  double total_revenue = 1;
 }

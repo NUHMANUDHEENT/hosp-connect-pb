@@ -17,8 +17,6 @@ service AdminService {
   rpc AddDoctor(AddDoctorRequest) returns (StandardResponse);
 
   rpc UpdateDoctor(UpdateDoctorRequest) returns (StandardResponse);
-
-  rpc AddSpecialization(AddSpecializationRequest) returns (StandardResponse);
   
   rpc DeleteDoctor(DeleteDoctorRequest) returns (StandardResponse);
   rpc AddPatient(AddPatientRequest) returns (StandardResponse);
@@ -121,10 +119,6 @@ message ListPatientsResponse {
     string status = 2;
     int32 statusCode = 3;
     string error = 4;
-}
-message AddSpecializationRequest{
-  string name = 1;
-  string description = 2;
 }
 message StandardResponse {
   string status = 1;

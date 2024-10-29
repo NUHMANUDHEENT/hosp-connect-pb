@@ -22,7 +22,6 @@ type AdminServiceClient interface {
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	AddDoctor(ctx context.Context, in *AddDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	UpdateDoctor(ctx context.Context, in *UpdateDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
-	AddSpecialization(ctx context.Context, in *AddSpecializationRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	DeleteDoctor(ctx context.Context, in *DeleteDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	AddPatient(ctx context.Context, in *AddPatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	DeletePatient(ctx context.Context, in *DeletePatientRequest, opts ...grpc.CallOption) (*StandardResponse, error)
@@ -69,15 +68,6 @@ func (c *adminServiceClient) AddDoctor(ctx context.Context, in *AddDoctorRequest
 func (c *adminServiceClient) UpdateDoctor(ctx context.Context, in *UpdateDoctorRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
 	out := new(StandardResponse)
 	err := c.cc.Invoke(ctx, "/admin.AdminService/UpdateDoctor", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *adminServiceClient) AddSpecialization(ctx context.Context, in *AddSpecializationRequest, opts ...grpc.CallOption) (*StandardResponse, error) {
-	out := new(StandardResponse)
-	err := c.cc.Invoke(ctx, "/admin.AdminService/AddSpecialization", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +137,6 @@ type AdminServiceServer interface {
 	SignUp(context.Context, *SignUpRequest) (*StandardResponse, error)
 	AddDoctor(context.Context, *AddDoctorRequest) (*StandardResponse, error)
 	UpdateDoctor(context.Context, *UpdateDoctorRequest) (*StandardResponse, error)
-	AddSpecialization(context.Context, *AddSpecializationRequest) (*StandardResponse, error)
 	DeleteDoctor(context.Context, *DeleteDoctorRequest) (*StandardResponse, error)
 	AddPatient(context.Context, *AddPatientRequest) (*StandardResponse, error)
 	DeletePatient(context.Context, *DeletePatientRequest) (*StandardResponse, error)
@@ -172,9 +161,6 @@ func (UnimplementedAdminServiceServer) AddDoctor(context.Context, *AddDoctorRequ
 }
 func (UnimplementedAdminServiceServer) UpdateDoctor(context.Context, *UpdateDoctorRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDoctor not implemented")
-}
-func (UnimplementedAdminServiceServer) AddSpecialization(context.Context, *AddSpecializationRequest) (*StandardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddSpecialization not implemented")
 }
 func (UnimplementedAdminServiceServer) DeleteDoctor(context.Context, *DeleteDoctorRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDoctor not implemented")
@@ -275,24 +261,6 @@ func _AdminService_UpdateDoctor_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AdminServiceServer).UpdateDoctor(ctx, req.(*UpdateDoctorRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AdminService_AddSpecialization_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddSpecializationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AdminServiceServer).AddSpecialization(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/admin.AdminService/AddSpecialization",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServiceServer).AddSpecialization(ctx, req.(*AddSpecializationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -424,10 +392,6 @@ var _AdminService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateDoctor",
 			Handler:    _AdminService_UpdateDoctor_Handler,
-		},
-		{
-			MethodName: "AddSpecialization",
-			Handler:    _AdminService_AddSpecialization_Handler,
 		},
 		{
 			MethodName: "DeleteDoctor",

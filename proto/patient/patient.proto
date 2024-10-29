@@ -22,6 +22,8 @@ service PatientService {
    rpc AddPrescription(AddPrescriptionRequest) returns (StandardResponse);
 
    rpc GetPrescription(GetPrescriptionRequest) returns (GetPrescriptionResponse);
+
+   rpc GetTotalPatient(GetTotalPatientCountRequest) returns (GetTotalPatientCountResponse);
 }
 
 
@@ -133,4 +135,9 @@ message GetPresc{
   string doctor_id= 1;
   repeated Prescription Treatment = 2;
   string prescription_time =3;
+}
+message GetTotalPatientCountRequest{}
+
+message GetTotalPatientCountResponse{
+  double total_revenue = 1;
 }

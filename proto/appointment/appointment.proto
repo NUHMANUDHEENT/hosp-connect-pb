@@ -24,6 +24,9 @@ service AppointmentService {
     rpc GetUpcomingAppointments(GetAppointmentsRequest) returns (GetAppointmentsResponse);
 
     rpc CreateRoomForVideoTreatment(VideoRoomRequest) returns (VideoRoomResponse);
+
+    rpc FetchStatisticsDetails(StatisticsRequest) returns (StatisticsResponse);
+    rpc AddSpecialization(AddSpecializationRequest) returns (StandardResponse);
 }
 
 
@@ -49,6 +52,8 @@ message GetAvailabilityRequest {
     string Date_time = 1;
     string Is_available =2;
   }
+  message StatisticsRequest{}
+
   message AvailabilitySlot {
     string doctor_id = 1;    // ID of the doctor
     string doctor_name = 2;  // Name of the doctor
@@ -131,3 +136,25 @@ message VideoRoomResponse{
   string room_url =4;
 }
 
+message StatisticsResponse {
+  int32 totalPatients = 1;
+  int32 totalAppointments = 2;
+  float totalRevenue = 3;
+  repeated SpecializationStats specializationStats = 4;
+  string admin_name = 5;
+}
+
+message SpecializationStats {
+  string specializationName = 1;
+  int32 appointmentCount = 2;
+}
+message AddSpecializationRequest{
+  string name = 1;
+  string description = 2;
+}
+message StandardResponse {
+  string status = 1;
+  int32 status_code = 2; 
+  string message = 3;    
+  string error = 4;     
+}

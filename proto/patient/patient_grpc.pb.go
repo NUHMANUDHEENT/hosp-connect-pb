@@ -24,6 +24,7 @@ type PatientServiceClient interface {
 	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	AddPrescription(ctx context.Context, in *AddPrescriptionRequest, opts ...grpc.CallOption) (*StandardResponse, error)
 	GetPrescription(ctx context.Context, in *GetPrescriptionRequest, opts ...grpc.CallOption) (*GetPrescriptionResponse, error)
+	GetTotalPatient(ctx context.Context, in *GetTotalPatientCountRequest, opts ...grpc.CallOption) (*GetTotalPatientCountResponse, error)
 }
 
 type patientServiceClient struct {
@@ -97,6 +98,15 @@ func (c *patientServiceClient) GetPrescription(ctx context.Context, in *GetPresc
 	return out, nil
 }
 
+func (c *patientServiceClient) GetTotalPatient(ctx context.Context, in *GetTotalPatientCountRequest, opts ...grpc.CallOption) (*GetTotalPatientCountResponse, error) {
+	out := new(GetTotalPatientCountResponse)
+	err := c.cc.Invoke(ctx, "/patient.PatientService/GetTotalPatient", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PatientServiceServer is the server API for PatientService service.
 // All implementations must embed UnimplementedPatientServiceServer
 // for forward compatibility
@@ -108,6 +118,7 @@ type PatientServiceServer interface {
 	UpdateProfile(context.Context, *UpdateProfileRequest) (*StandardResponse, error)
 	AddPrescription(context.Context, *AddPrescriptionRequest) (*StandardResponse, error)
 	GetPrescription(context.Context, *GetPrescriptionRequest) (*GetPrescriptionResponse, error)
+	GetTotalPatient(context.Context, *GetTotalPatientCountRequest) (*GetTotalPatientCountResponse, error)
 	mustEmbedUnimplementedPatientServiceServer()
 }
 
@@ -135,6 +146,9 @@ func (UnimplementedPatientServiceServer) AddPrescription(context.Context, *AddPr
 }
 func (UnimplementedPatientServiceServer) GetPrescription(context.Context, *GetPrescriptionRequest) (*GetPrescriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPrescription not implemented")
+}
+func (UnimplementedPatientServiceServer) GetTotalPatient(context.Context, *GetTotalPatientCountRequest) (*GetTotalPatientCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTotalPatient not implemented")
 }
 func (UnimplementedPatientServiceServer) mustEmbedUnimplementedPatientServiceServer() {}
 
@@ -275,6 +289,24 @@ func _PatientService_GetPrescription_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PatientService_GetTotalPatient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTotalPatientCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PatientServiceServer).GetTotalPatient(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/patient.PatientService/GetTotalPatient",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PatientServiceServer).GetTotalPatient(ctx, req.(*GetTotalPatientCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _PatientService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "patient.PatientService",
 	HandlerType: (*PatientServiceServer)(nil),
@@ -306,6 +338,10 @@ var _PatientService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPrescription",
 			Handler:    _PatientService_GetPrescription_Handler,
+		},
+		{
+			MethodName: "GetTotalPatient",
+			Handler:    _PatientService_GetTotalPatient_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
