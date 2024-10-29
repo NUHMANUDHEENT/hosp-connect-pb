@@ -139,5 +139,5 @@ message GetPresc{
 message GetTotalPatientCountRequest{}
 
 message GetTotalPatientCountResponse{
-  double total_revenue = 1;
+  double patient_count = 1;
 }
