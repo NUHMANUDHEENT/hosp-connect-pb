@@ -1629,6 +1629,91 @@ func (x *StandardResponse) GetData() *anypb.Any {
 	return nil
 }
 
+type GetTotalDoctorCountRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *GetTotalDoctorCountRequest) Reset() {
+	*x = GetTotalDoctorCountRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_doctor_doctor_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetTotalDoctorCountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTotalDoctorCountRequest) ProtoMessage() {}
+
+func (x *GetTotalDoctorCountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_doctor_doctor_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTotalDoctorCountRequest.ProtoReflect.Descriptor instead.
+func (*GetTotalDoctorCountRequest) Descriptor() ([]byte, []int) {
+	return file_doctor_doctor_proto_rawDescGZIP(), []int{25}
+}
+
+type GetTotalDoctorCountResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	DoctorCount float64 `protobuf:"fixed64,1,opt,name=doctor_count,json=doctorCount,proto3" json:"doctor_count,omitempty"`
+}
+
+func (x *GetTotalDoctorCountResponse) Reset() {
+	*x = GetTotalDoctorCountResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_doctor_doctor_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetTotalDoctorCountResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTotalDoctorCountResponse) ProtoMessage() {}
+
+func (x *GetTotalDoctorCountResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_doctor_doctor_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTotalDoctorCountResponse.ProtoReflect.Descriptor instead.
+func (*GetTotalDoctorCountResponse) Descriptor() ([]byte, []int) {
+	return file_doctor_doctor_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *GetTotalDoctorCountResponse) GetDoctorCount() float64 {
+	if x != nil {
+		return x.DoctorCount
+	}
+	return 0
+}
+
 var File_doctor_doctor_proto protoreflect.FileDescriptor
 
 var file_doctor_doctor_proto_rawDesc = []byte{
@@ -1831,7 +1916,13 @@ var file_doctor_doctor_proto_rawDesc = []byte{
 	0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x28, 0x0a, 0x04, 0x64, 0x61,
 	0x74, 0x61, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
 	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x41, 0x6e, 0x79, 0x52, 0x04,
-	0x64, 0x61, 0x74, 0x61, 0x32, 0xe9, 0x06, 0x0a, 0x0d, 0x44, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x53,
+	0x64, 0x61, 0x74, 0x61, 0x22, 0x1c, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x74, 0x61, 0x6c,
+	0x44, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x22, 0x40, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x44, 0x6f,
+	0x63, 0x74, 0x6f, 0x72, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x21, 0x0a, 0x0c, 0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x5f, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0b, 0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x43,
+	0x6f, 0x75, 0x6e, 0x74, 0x32, 0xc4, 0x07, 0x0a, 0x0d, 0x44, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x53,
 	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x37, 0x0a, 0x06, 0x53, 0x69, 0x67, 0x6e, 0x49, 0x6e,
 	0x12, 0x15, 0x2e, 0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x2e, 0x53, 0x69, 0x67, 0x6e, 0x49, 0x6e,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72,
@@ -1886,8 +1977,13 @@ var file_doctor_doctor_proto_rawDesc = []byte{
 	0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x2e, 0x43, 0x68, 0x65,
 	0x63, 0x6b, 0x41, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x69, 0x6c, 0x69, 0x74, 0x79, 0x42, 0x79,
 	0x44, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x49, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x42, 0x09, 0x5a, 0x07, 0x2f, 0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x12, 0x59, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x44, 0x6f, 0x63, 0x74,
+	0x6f, 0x72, 0x12, 0x22, 0x2e, 0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x2e, 0x47, 0x65, 0x74, 0x54,
+	0x6f, 0x74, 0x61, 0x6c, 0x44, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e, 0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x2e,
+	0x47, 0x65, 0x74, 0x54, 0x6f, 0x74, 0x61, 0x6c, 0x44, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x43, 0x6f,
+	0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x09, 0x5a, 0x07, 0x2f,
+	0x64, 0x6f, 0x63, 0x74, 0x6f, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1902,7 +1998,7 @@ func file_doctor_doctor_proto_rawDescGZIP() []byte {
 	return file_doctor_doctor_proto_rawDescData
 }
 
-var file_doctor_doctor_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_doctor_doctor_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_doctor_doctor_proto_goTypes = []interface{}{
 	(*SignInRequest)(nil),                       // 0: doctor.SignInRequest
 	(*SignInResponse)(nil),                      // 1: doctor.SignInResponse
@@ -1929,17 +2025,19 @@ var file_doctor_doctor_proto_goTypes = []interface{}{
 	(*CheckAvailabilityByDoctorIdResponse)(nil), // 22: doctor.CheckAvailabilityByDoctorIdResponse
 	(*DoctorAvailability)(nil),                  // 23: doctor.DoctorAvailability
 	(*StandardResponse)(nil),                    // 24: doctor.StandardResponse
-	(*timestamppb.Timestamp)(nil),               // 25: google.protobuf.Timestamp
-	(*anypb.Any)(nil),                           // 26: google.protobuf.Any
+	(*GetTotalDoctorCountRequest)(nil),          // 25: doctor.GetTotalDoctorCountRequest
+	(*GetTotalDoctorCountResponse)(nil),         // 26: doctor.GetTotalDoctorCountResponse
+	(*timestamppb.Timestamp)(nil),               // 27: google.protobuf.Timestamp
+	(*anypb.Any)(nil),                           // 28: google.protobuf.Any
 }
 var file_doctor_doctor_proto_depIdxs = []int32{
 	5,  // 0: doctor.UpdateScheduleRequest.schedule_entries:type_name -> doctor.ScheduleEntry
 	14, // 1: doctor.UpdateProfileRequest.doctor:type_name -> doctor.Doctor
 	17, // 2: doctor.ConfirmScheduleResponse.schedules:type_name -> doctor.Schedule
-	25, // 3: doctor.GetAvailabilityRequest.requested_date_time:type_name -> google.protobuf.Timestamp
+	27, // 3: doctor.GetAvailabilityRequest.requested_date_time:type_name -> google.protobuf.Timestamp
 	20, // 4: doctor.GetAvailabilityResponse.available_slots:type_name -> doctor.AvailabilitySlot
 	23, // 5: doctor.CheckAvailabilityByDoctorIdResponse.doctor_availability:type_name -> doctor.DoctorAvailability
-	26, // 6: doctor.StandardResponse.data:type_name -> google.protobuf.Any
+	28, // 6: doctor.StandardResponse.data:type_name -> google.protobuf.Any
 	0,  // 7: doctor.DoctorService.SignIn:input_type -> doctor.SignInRequest
 	11, // 8: doctor.DoctorService.GetProfile:input_type -> doctor.GetProfileRequest
 	13, // 9: doctor.DoctorService.UpdateProfile:input_type -> doctor.UpdateProfileRequest
@@ -1951,19 +2049,21 @@ var file_doctor_doctor_proto_depIdxs = []int32{
 	15, // 15: doctor.DoctorService.ConfirmSchedule:input_type -> doctor.ConfirmScheduleRequest
 	18, // 16: doctor.DoctorService.GetAvailability:input_type -> doctor.GetAvailabilityRequest
 	21, // 17: doctor.DoctorService.CheckAvailabilityByDoctorId:input_type -> doctor.CheckAvailabilityByDoctorIdRequest
-	1,  // 18: doctor.DoctorService.SignIn:output_type -> doctor.SignInResponse
-	12, // 19: doctor.DoctorService.GetProfile:output_type -> doctor.GetProfileResponse
-	24, // 20: doctor.DoctorService.UpdateProfile:output_type -> doctor.StandardResponse
-	24, // 21: doctor.DoctorService.UpdateSchedule:output_type -> doctor.StandardResponse
-	24, // 22: doctor.DoctorService.AddPrescription:output_type -> doctor.StandardResponse
-	24, // 23: doctor.DoctorService.AddDoctor:output_type -> doctor.StandardResponse
-	24, // 24: doctor.DoctorService.StoreAccessToken:output_type -> doctor.StandardResponse
-	24, // 25: doctor.DoctorService.GetAccessToken:output_type -> doctor.StandardResponse
-	16, // 26: doctor.DoctorService.ConfirmSchedule:output_type -> doctor.ConfirmScheduleResponse
-	19, // 27: doctor.DoctorService.GetAvailability:output_type -> doctor.GetAvailabilityResponse
-	22, // 28: doctor.DoctorService.CheckAvailabilityByDoctorId:output_type -> doctor.CheckAvailabilityByDoctorIdResponse
-	18, // [18:29] is the sub-list for method output_type
-	7,  // [7:18] is the sub-list for method input_type
+	25, // 18: doctor.DoctorService.GetTotalDoctor:input_type -> doctor.GetTotalDoctorCountRequest
+	1,  // 19: doctor.DoctorService.SignIn:output_type -> doctor.SignInResponse
+	12, // 20: doctor.DoctorService.GetProfile:output_type -> doctor.GetProfileResponse
+	24, // 21: doctor.DoctorService.UpdateProfile:output_type -> doctor.StandardResponse
+	24, // 22: doctor.DoctorService.UpdateSchedule:output_type -> doctor.StandardResponse
+	24, // 23: doctor.DoctorService.AddPrescription:output_type -> doctor.StandardResponse
+	24, // 24: doctor.DoctorService.AddDoctor:output_type -> doctor.StandardResponse
+	24, // 25: doctor.DoctorService.StoreAccessToken:output_type -> doctor.StandardResponse
+	24, // 26: doctor.DoctorService.GetAccessToken:output_type -> doctor.StandardResponse
+	16, // 27: doctor.DoctorService.ConfirmSchedule:output_type -> doctor.ConfirmScheduleResponse
+	19, // 28: doctor.DoctorService.GetAvailability:output_type -> doctor.GetAvailabilityResponse
+	22, // 29: doctor.DoctorService.CheckAvailabilityByDoctorId:output_type -> doctor.CheckAvailabilityByDoctorIdResponse
+	26, // 30: doctor.DoctorService.GetTotalDoctor:output_type -> doctor.GetTotalDoctorCountResponse
+	19, // [19:31] is the sub-list for method output_type
+	7,  // [7:19] is the sub-list for method input_type
 	7,  // [7:7] is the sub-list for extension type_name
 	7,  // [7:7] is the sub-list for extension extendee
 	0,  // [0:7] is the sub-list for field type_name
@@ -2275,6 +2375,30 @@ func file_doctor_doctor_proto_init() {
 				return nil
 			}
 		}
+		file_doctor_doctor_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetTotalDoctorCountRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_doctor_doctor_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetTotalDoctorCountResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2282,7 +2406,7 @@ func file_doctor_doctor_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_doctor_doctor_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   25,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

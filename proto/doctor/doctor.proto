@@ -31,6 +31,8 @@ service DoctorService {
 
   rpc CheckAvailabilityByDoctorId(CheckAvailabilityByDoctorIdRequest) returns (CheckAvailabilityByDoctorIdResponse);
 
+  rpc GetTotalDoctor(GetTotalDoctorCountRequest) returns (GetTotalDoctorCountResponse);
+
 }
 
 message SignInRequest {
@@ -178,4 +180,9 @@ message StandardResponse {
   string message = 3;    
   string error = 4;    
   google.protobuf.Any data = 5;  
+}
+message GetTotalDoctorCountRequest{}
+
+message GetTotalDoctorCountResponse{
+  double doctor_count = 1;
 }

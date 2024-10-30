@@ -27,6 +27,7 @@ service AppointmentService {
 
     rpc FetchStatisticsDetails(StatisticsRequest) returns (StatisticsResponse);
     rpc AddSpecialization(AddSpecializationRequest) returns (StandardResponse);
+    rpc GetTotalAppointment(GetTotalAppointmentRequest) returns (GetTotalAppointmentResponse);
 }
 
 
@@ -52,7 +53,9 @@ message GetAvailabilityRequest {
     string Date_time = 1;
     string Is_available =2;
   }
-  message StatisticsRequest{}
+  message StatisticsRequest{
+    string param = 1;
+  }
 
   message AvailabilitySlot {
     string doctor_id = 1;    // ID of the doctor
@@ -157,4 +160,11 @@ message StandardResponse {
   int32 status_code = 2; 
   string message = 3;    
   string error = 4;     
+}
+message GetTotalAppointmentRequest{
+  string param =1;
+}
+
+message GetTotalAppointmentResponse{
+  double total_appointment = 1;
 }

@@ -29,6 +29,7 @@ type AppointmentServiceClient interface {
 	CreateRoomForVideoTreatment(ctx context.Context, in *VideoRoomRequest, opts ...grpc.CallOption) (*VideoRoomResponse, error)
 	FetchStatisticsDetails(ctx context.Context, in *StatisticsRequest, opts ...grpc.CallOption) (*StatisticsResponse, error)
 	AddSpecialization(ctx context.Context, in *AddSpecializationRequest, opts ...grpc.CallOption) (*StandardResponse, error)
+	GetTotalAppointment(ctx context.Context, in *GetTotalAppointmentRequest, opts ...grpc.CallOption) (*GetTotalAppointmentResponse, error)
 }
 
 type appointmentServiceClient struct {
@@ -120,6 +121,15 @@ func (c *appointmentServiceClient) AddSpecialization(ctx context.Context, in *Ad
 	return out, nil
 }
 
+func (c *appointmentServiceClient) GetTotalAppointment(ctx context.Context, in *GetTotalAppointmentRequest, opts ...grpc.CallOption) (*GetTotalAppointmentResponse, error) {
+	out := new(GetTotalAppointmentResponse)
+	err := c.cc.Invoke(ctx, "/appointment.AppointmentService/GetTotalAppointment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppointmentServiceServer is the server API for AppointmentService service.
 // All implementations must embed UnimplementedAppointmentServiceServer
 // for forward compatibility
@@ -136,6 +146,7 @@ type AppointmentServiceServer interface {
 	CreateRoomForVideoTreatment(context.Context, *VideoRoomRequest) (*VideoRoomResponse, error)
 	FetchStatisticsDetails(context.Context, *StatisticsRequest) (*StatisticsResponse, error)
 	AddSpecialization(context.Context, *AddSpecializationRequest) (*StandardResponse, error)
+	GetTotalAppointment(context.Context, *GetTotalAppointmentRequest) (*GetTotalAppointmentResponse, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -169,6 +180,9 @@ func (UnimplementedAppointmentServiceServer) FetchStatisticsDetails(context.Cont
 }
 func (UnimplementedAppointmentServiceServer) AddSpecialization(context.Context, *AddSpecializationRequest) (*StandardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddSpecialization not implemented")
+}
+func (UnimplementedAppointmentServiceServer) GetTotalAppointment(context.Context, *GetTotalAppointmentRequest) (*GetTotalAppointmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTotalAppointment not implemented")
 }
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}
 
@@ -345,6 +359,24 @@ func _AppointmentService_AddSpecialization_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_GetTotalAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTotalAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).GetTotalAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appointment.AppointmentService/GetTotalAppointment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).GetTotalAppointment(ctx, req.(*GetTotalAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _AppointmentService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "appointment.AppointmentService",
 	HandlerType: (*AppointmentServiceServer)(nil),
@@ -384,6 +416,10 @@ var _AppointmentService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddSpecialization",
 			Handler:    _AppointmentService_AddSpecialization_Handler,
+		},
+		{
+			MethodName: "GetTotalAppointment",
+			Handler:    _AppointmentService_GetTotalAppointment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

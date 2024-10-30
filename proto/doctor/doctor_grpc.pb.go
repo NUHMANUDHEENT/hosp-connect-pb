@@ -28,6 +28,7 @@ type DoctorServiceClient interface {
 	ConfirmSchedule(ctx context.Context, in *ConfirmScheduleRequest, opts ...grpc.CallOption) (*ConfirmScheduleResponse, error)
 	GetAvailability(ctx context.Context, in *GetAvailabilityRequest, opts ...grpc.CallOption) (*GetAvailabilityResponse, error)
 	CheckAvailabilityByDoctorId(ctx context.Context, in *CheckAvailabilityByDoctorIdRequest, opts ...grpc.CallOption) (*CheckAvailabilityByDoctorIdResponse, error)
+	GetTotalDoctor(ctx context.Context, in *GetTotalDoctorCountRequest, opts ...grpc.CallOption) (*GetTotalDoctorCountResponse, error)
 }
 
 type doctorServiceClient struct {
@@ -137,6 +138,15 @@ func (c *doctorServiceClient) CheckAvailabilityByDoctorId(ctx context.Context, i
 	return out, nil
 }
 
+func (c *doctorServiceClient) GetTotalDoctor(ctx context.Context, in *GetTotalDoctorCountRequest, opts ...grpc.CallOption) (*GetTotalDoctorCountResponse, error) {
+	out := new(GetTotalDoctorCountResponse)
+	err := c.cc.Invoke(ctx, "/doctor.DoctorService/GetTotalDoctor", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DoctorServiceServer is the server API for DoctorService service.
 // All implementations must embed UnimplementedDoctorServiceServer
 // for forward compatibility
@@ -152,6 +162,7 @@ type DoctorServiceServer interface {
 	ConfirmSchedule(context.Context, *ConfirmScheduleRequest) (*ConfirmScheduleResponse, error)
 	GetAvailability(context.Context, *GetAvailabilityRequest) (*GetAvailabilityResponse, error)
 	CheckAvailabilityByDoctorId(context.Context, *CheckAvailabilityByDoctorIdRequest) (*CheckAvailabilityByDoctorIdResponse, error)
+	GetTotalDoctor(context.Context, *GetTotalDoctorCountRequest) (*GetTotalDoctorCountResponse, error)
 	mustEmbedUnimplementedDoctorServiceServer()
 }
 
@@ -191,6 +202,9 @@ func (UnimplementedDoctorServiceServer) GetAvailability(context.Context, *GetAva
 }
 func (UnimplementedDoctorServiceServer) CheckAvailabilityByDoctorId(context.Context, *CheckAvailabilityByDoctorIdRequest) (*CheckAvailabilityByDoctorIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAvailabilityByDoctorId not implemented")
+}
+func (UnimplementedDoctorServiceServer) GetTotalDoctor(context.Context, *GetTotalDoctorCountRequest) (*GetTotalDoctorCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTotalDoctor not implemented")
 }
 func (UnimplementedDoctorServiceServer) mustEmbedUnimplementedDoctorServiceServer() {}
 
@@ -403,6 +417,24 @@ func _DoctorService_CheckAvailabilityByDoctorId_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DoctorService_GetTotalDoctor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTotalDoctorCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DoctorServiceServer).GetTotalDoctor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/doctor.DoctorService/GetTotalDoctor",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DoctorServiceServer).GetTotalDoctor(ctx, req.(*GetTotalDoctorCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _DoctorService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "doctor.DoctorService",
 	HandlerType: (*DoctorServiceServer)(nil),
@@ -450,6 +482,10 @@ var _DoctorService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckAvailabilityByDoctorId",
 			Handler:    _DoctorService_CheckAvailabilityByDoctorId_Handler,
+		},
+		{
+			MethodName: "GetTotalDoctor",
+			Handler:    _DoctorService_GetTotalDoctor_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
