@@ -181,7 +181,9 @@ message StandardResponse {
   string error = 4;    
   google.protobuf.Any data = 5;  
 }
-message GetTotalDoctorCountRequest{}
+message GetTotalDoctorCountRequest{
+  string param = 1;
+}
 
 message GetTotalDoctorCountResponse{
   double doctor_count = 1;
