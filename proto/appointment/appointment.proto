@@ -28,6 +28,7 @@ service AppointmentService {
     rpc FetchStatisticsDetails(StatisticsRequest) returns (StatisticsResponse);
     rpc AddSpecialization(AddSpecializationRequest) returns (StandardResponse);
     rpc GetTotalAppointment(GetTotalAppointmentRequest) returns (GetTotalAppointmentResponse);
+    rpc CancelAppointment(CancelAppointmentRequest) returns (CancelAppointmentResponse);
 }
 
 
@@ -168,4 +169,14 @@ message GetTotalAppointmentRequest{
 
 message GetTotalAppointmentResponse{
   double total_appointment = 1;
+}
+message CancelAppointmentRequest{
+   string appointment_id =1;
+   string reason =2;
+   string patient_id =3;
+}
+message CancelAppointmentResponse{
+  string status = 1;
+  string status_code = 2;
+  string message = 3;
 }
