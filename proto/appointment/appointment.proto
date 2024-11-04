@@ -171,7 +171,7 @@ message GetTotalAppointmentResponse{
   double total_appointment = 1;
 }
 message CancelAppointmentRequest{
-   string appointment_id =1;
+   int32 appointment_id =1;
    string reason =2;
    string patient_id =3;
 }
